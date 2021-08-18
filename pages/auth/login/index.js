@@ -6,8 +6,11 @@ import style from "../../../styles/login.module.css";
 import logo from "../../../public/login/Zwallet.png";
 import Group57 from "../../../public/login/Group57.png";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
+import Cookies from "js-cookie";
+import { login } from "../../../redux/actions/signin";
 
-export default function Login() {
+function Login(props) {
   const router = useRouter();
   const [form, setForm] = useState({ userEmail: "", userPassword: "" });
 
@@ -16,10 +19,26 @@ export default function Login() {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const postLogin = () => {
+  const postLogin = (event) => {
     event.preventDefault();
-    console.log(form);
-    console.log(`Testing the Log In submit button!`);
+    // console.log(form);
+    // console.log(`Testing the Log In submit button!`);
+    props
+      .login(form)
+      .then((res) => {
+        console.log(res);
+        Cookies.set("user_email", res.value.data.data.user_email, {
+          expires: 7,
+          secure: true,
+        });
+        Cookies.set("token", res.value.data.data.token, {
+          expires: 7,
+          secure: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -58,7 +77,7 @@ export default function Login() {
                     Platforms With +30.000 Users
                   </h4>
                   <p className={style.lineHeight2}>
-                    Transfering money is eassier than ever, you can access
+                    Transfering money is easier than ever, you can access
                     Zwallet wherever you are. Desktop, laptop, mobile phone? We
                     cover all of that for you!
                   </p>
@@ -103,3 +122,11 @@ export default function Login() {
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  signin: state.signin,
+});
+
+const mapDispatchtoProps = { login };
+
+export default connect(mapStateToProps, mapDispatchtoProps)(Login);
