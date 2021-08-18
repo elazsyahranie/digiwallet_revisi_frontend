@@ -2,13 +2,13 @@ import Image from "next/image";
 import Layout from "/components/Layout";
 import { useState } from "react";
 import { Container, Row, Form, Button, Alert } from "react-bootstrap";
-import style from "/styles/login.module.css";
+import style from "/styles/signup.module.css";
 import logo from "/public/login/Zwallet.png";
 import Group57 from "/public/login/Group57.png";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
-import { login } from "/redux/actions/auth";
+import { signup } from "/redux/actions/auth";
 import { unauthPage } from "/middleware/authorizationPage";
 
 export async function getServerSideProps(context) {
@@ -16,9 +16,13 @@ export async function getServerSideProps(context) {
   return { props: {} };
 }
 
-function Login(props) {
+function Signup(props) {
   const router = useRouter();
-  const [form, setForm] = useState({ userEmail: "", userPassword: "" });
+  const [form, setForm] = useState({
+    userName: "",
+    userEmail: "",
+    userPassword: "",
+  });
 
   const changeText = (event) => {
     event.preventDefault();
@@ -29,21 +33,13 @@ function Login(props) {
 
   const postLogin = (event) => {
     event.preventDefault();
-    if (!form.userEmail || !form.userPassword) {
+    if (!form.userName || !form.userEmail || !form.userPassword) {
       setInputEmpty(true);
     } else {
       props
-        .login(form)
+        .signup(form)
         .then((res) => {
           console.log(res);
-          Cookies.set("user_email", res.value.data.data.user_email, {
-            expires: 7,
-            secure: true,
-          });
-          Cookies.set("token", res.value.data.data.token, {
-            expires: 7,
-            secure: true,
-          });
         })
         .catch((err) => {
           console.log(err);
@@ -92,6 +88,16 @@ function Login(props) {
                     cover all of that for you!
                   </p>
                   <Form>
+                    <Form.Group className="mb-3" controlId="formBasicUsername">
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter your name"
+                        name="userName"
+                        onChange={(event) => changeText(event)}
+                      />
+                    </Form.Group>
+
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Email address</Form.Label>
                       <Form.Control
@@ -120,7 +126,7 @@ function Login(props) {
                       type="submit"
                       onClick={(event) => postLogin(event)}
                     >
-                      Login
+                      Signup
                     </Button>
                   </Form>
                   {inputEmpty && (
@@ -144,6 +150,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-const mapDispatchtoProps = { login };
+const mapDispatchtoProps = { signup };
 
-export default connect(mapStateToProps, mapDispatchtoProps)(Login);
+export default connect(mapStateToProps, mapDispatchtoProps)(Signup);

@@ -3,6 +3,7 @@ import Image from "next/image";
 // import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import Footer from "../components/module/Footer";
+import { authPage } from "middleware/authorizationPage";
 
 export default function Home() {
   return (

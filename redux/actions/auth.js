@@ -6,3 +6,10 @@ export const login = (data) => {
     payload: axiosApiIntances.post("/auth/login", data),
   };
 };
+
+export const signup = (data) => {
+  return {
+    type: "SIGNUP",
+    payload: axiosApiIntances.post("/auth/register", data),
+  };
+};
