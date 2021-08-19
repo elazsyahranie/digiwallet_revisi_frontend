@@ -12,6 +12,19 @@
   width: 80px !important;
 }
 
+.namePhoneNumber {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.userProfilePic {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 /* 
 .navBarWidth {
   padding-right: 100px;

@@ -2,6 +2,7 @@ import { Navbar, Nav, Container, Button, Row } from "react-bootstrap";
 import Image from "next/image";
 import ZwalletLogo from "/public/ZwalletLogoColor.png";
 import TempImgProfile from "/public/Rectangle 25.png";
+import BellLogo from "/public/bell_icon.png";
 import style from "/styles/navbar.module.css";
 
 function NavBar() {
@@ -35,30 +36,23 @@ function NavBar() {
             </Nav>
             <Nav
               className={`justify-content-between`}
-              style={{ width: "15rem" }}
+              style={{ width: "340px" }}
             >
               <Nav.Item>
-                <Nav.Link>
-                  <Image
-                    src={TempImgProfile}
-                    alt=""
-                    className="img-fluid"
-                  ></Image>
-                </Nav.Link>
+                <Image
+                  src={TempImgProfile}
+                  alt=""
+                  className={`img-fluid my-auto`}
+                ></Image>
               </Nav.Item>
               <Nav.Item>
-                <Row>
+                <div className={style.namePhoneNumber}>
                   <span className="d-block fw-bold">Robert Chandler</span>
                   <span className="d-block">+62 8139 3877 7946</span>
-                </Row>
+                </div>
               </Nav.Item>
               <Nav.Item>
-                <Button
-                  variant="danger"
-                  onClick={(event) => toHandleLogOut(event)}
-                >
-                  Log Out
-                </Button>
+                <Image src={BellLogo} alt="" className={`img-fluid`}></Image>
               </Nav.Item>
             </Nav>
           </Navbar.Collapse>
