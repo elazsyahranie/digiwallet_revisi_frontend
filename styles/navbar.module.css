@@ -1,0 +1,40 @@
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbarHeight {
+  height: 90px;
+  border: 1px solid #000;
+}
+
+.navLinkWidth {
+  width: 80px !important;
+}
+
+/* 
+.navBarWidth {
+  padding-right: 100px;
+} */
+
+.leftNav {
+  margin-left: 3rem;
+}
+
+/* .navWidth {
+  position: relative;
+  left: 6%;
+  display: flex;
+} */
+
+.navWidthRight {
+  position: relative;
+  display: flex;
+  right: 0;
+}
+
+@media (max-width: 993px) {
+  .leftNav {
+    margin-left: 0;
+  }
+}
