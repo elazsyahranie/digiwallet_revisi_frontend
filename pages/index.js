@@ -5,15 +5,24 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import Layout from "../components/Layout";
 import NavBar from "../components/module/NavBar";
 import Footer from "../components/module/Footer";
-// import { authPage } from "middleware/authorizationPage";
+import { authPage } from "middleware/authorizationPage";
 import { connect } from "react-redux";
+import { getUserbyId } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
 
 export async function getServerSideProps(context) {
-  console.log(props);
+  const data = await authPage(context);
+  console.log(data);
+  // getUserbyId(data.id)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
   return { props: {} }; // untuk halaman yang ga perlu login
 }
 
@@ -95,6 +104,9 @@ function Home(props) {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
 });
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchtoProps = { getUserbyId };
+
+export default connect(mapStateToProps, mapDispatchtoProps)(Home);
