@@ -36,7 +36,7 @@ function NavBar() {
             </Nav>
             <Nav
               className={`justify-content-between`}
-              style={{ width: "340px" }}
+              style={{ width: "260px" }}
             >
               <Nav.Item>
                 <Image

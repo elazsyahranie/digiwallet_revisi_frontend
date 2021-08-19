@@ -5,7 +5,7 @@
 
 .navbarHeight {
   height: 90px;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
 }
 
 .navLinkWidth {
@@ -32,6 +32,7 @@
 
 .leftNav {
   margin-left: 3rem;
+  visibility: hidden;
 }
 
 /* .navWidth {

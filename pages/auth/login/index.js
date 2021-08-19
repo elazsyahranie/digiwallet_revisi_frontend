@@ -44,6 +44,7 @@ function Login(props) {
             expires: 7,
             secure: true,
           });
+          router.push("/");
         })
         .catch((err) => {
           console.log(err);
