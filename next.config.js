@@ -14,6 +14,10 @@ module.exports = {
         source: "/signup", // pengganti path pada react js
         destination: "/auth/signup", // lokasi path
       },
+      {
+        source: "/insert-pin", // pengganti path pada react js
+        destination: "/auth/insertpin", // lokasi path
+      },
     ];
   },
 };

@@ -13,6 +13,8 @@ import { getUserbyId } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
+import greenTopUpIcon from "/public/in2.png";
+import redIcon from "/public/out2.png";
 import profileIcon from "/public/group40.png";
 
 export async function getServerSideProps(context) {
@@ -33,30 +35,36 @@ function Home(props) {
   console.log(props);
   return (
     <>
-      <Layout title="Home">
+      <Layout title="Digiwallet | Dashboard">
         <NavBar data={props.userInfo} />
         <div className={styles.greyBackground}>
-          <Container className="py-4">
+          <Container fluid="lg" className="py-4">
             <Row>
               {/* LEFT MENU */}
-              <Col lg={3} md={3} sm={12} xs={12}>
+              <Col lg={3} md={4} sm={1} xs={1}>
                 <div className={styles.whiteBackground}>
-                  <div className="pt-5">
-                    <Button className={styles.leftMenuButtonSelected}>
-                      <Image
-                        src={dashboardIcon}
-                        alt=""
-                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
-                      ></Image>
-                      <span className="mx-4">Dashboard</span>
-                    </Button>
+                  <div className={`pt-5`}>
+                    <div className={styles.leftMenu}>
+                      <Button className={styles.leftMenuButtonSelected}>
+                        <Image
+                          src={dashboardIcon}
+                          alt=""
+                          className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                        ></Image>
+                      </Button>
+                      <Button className={styles.leftMenuExplaination}>
+                        <span>Dashboard</span>
+                      </Button>
+                    </div>
                     <Button className={styles.leftMenuButton}>
                       <Image
                         src={transferIcon}
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className="mx-4">Transfer</span>
+                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                        Transfer
+                      </span>
                     </Button>
                     <Button className={styles.leftMenuButton}>
                       <Image
@@ -64,7 +72,9 @@ function Home(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className="mx-4">Top Up</span>
+                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                        Top Up
+                      </span>
                     </Button>
                     <Button className={styles.leftMenuButton}>
                       <Image
@@ -72,13 +82,15 @@ function Home(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className="mx-4">Profile</span>
+                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                        Profile
+                      </span>
                     </Button>
                   </div>
                 </div>
               </Col>
               {/* RIGHT MENU */}
-              <Col lg={8} md={8} sm={12} xs={12}>
+              <Col lg={8} md={7} sm={11} xs={11}>
                 <Row
                   className={`p-4 mb-3 ${styles.blueBackground} ${styles.whiteText}`}
                 >
@@ -95,7 +107,34 @@ function Home(props) {
                   </Col>
                 </Row>
                 {/* RIGHT MENU BOTTOM */}
-                <Row className={`p-4 ${styles.whiteBackground}`}>Hey!</Row>
+                <Row className={`p-4 ${styles.whiteBackground}`}>
+                  <Col lg={6} md={6} sm={6} xs={6}>
+                    <Row>
+                      <div>
+                        <Image
+                          src={greenTopUpIcon}
+                          alt=""
+                          className="img-fluid"
+                        ></Image>
+                      </div>
+                      <span className="d-block">Income</span>
+                      <h5>Rp2.120.000</h5>
+                    </Row>
+                  </Col>
+                  <Col lg={6} md={6} sm={6} xs={6}>
+                    <Row>
+                      <div>
+                        <Image
+                          src={redIcon}
+                          alt=""
+                          className="img-fluid"
+                        ></Image>
+                      </div>
+                      <span className="d-block">Expense</span>
+                      <h5>Rp1.560.000</h5>
+                    </Row>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

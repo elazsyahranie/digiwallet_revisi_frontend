@@ -3,6 +3,11 @@
   background-color: #e5e5e5;
 }
 
+.mainRowMargin {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
 .whiteBackground {
   background-color: #fff;
   border-radius: 25px;
@@ -15,6 +20,10 @@
 
 .whiteText {
   color: white;
+}
+
+.leftMenu {
+  min-height: 42px;
 }
 
 .leftMenuIcon {
@@ -35,11 +44,20 @@
   display: flex;
 }
 
+.leftMenuExplaination {
+  /* height: 42px; */
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+}
+
 .leftMenuButtonSelected,
 .leftMenuButtonSelected:hover {
-  display: block;
-  width: 100%;
-  margin-bottom: 20px;
+  /* display: block; */
+  /* width: 100%; */
+  /* margin-bottom: 20px; */
+  /* height: 42px; */
   color: black;
   background-color: transparent;
   border-left: 5px solid #0070f3;
@@ -47,12 +65,47 @@
   border-bottom: none;
   border-right: none;
   border-radius: 0px;
-  display: flex;
+  /* display: flex; */
 }
 
-.leftMenuButtonIcon {
+/* .leftMenuButtonIcon {
   position: relative;
   height: 28px;
+} */
+
+@media (max-width: 822px) {
+  .menuExplaination {
+    display: none;
+  }
+
+  .leftMenuButton,
+  .leftMenuButton:hover {
+    display: block;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    color: black;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    display: flex;
+  }
+
+  .leftMenuButtonSelected,
+  .leftMenuButtonSelected:hover {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    color: black;
+    align-items: center;
+    background-color: transparent;
+    border-left: 5px solid #0070f3;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-radius: 0px;
+    display: flex;
+  }
 }
 
 .rightMenuButtonUp {
