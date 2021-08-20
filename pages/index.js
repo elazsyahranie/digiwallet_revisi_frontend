@@ -19,15 +19,14 @@ export async function getServerSideProps(context) {
   const data = await authPage(context);
   const userIdParsed = parseInt(data.userId);
   const userData = await axiosApiIntances
-    .get(`/user/${userIdParsed}`)
+    .get(`user/${userIdParsed}`)
     .then((res) => {
-      return res.data; // return kalau hanya satu baris
+      return res.data.data[0];
     })
     .catch((err) => {
-      // console.log(err);
-      return [];
+      console.log(err);
     });
-  return { props: { users: userData } }; // untuk halaman yang ga perlu login
+  return { props: { userInfo: userData } };
 }
 
 function Home(props) {
@@ -35,7 +34,7 @@ function Home(props) {
   return (
     <>
       <Layout title="Home">
-        <NavBar />
+        <NavBar data={props.userInfo} />
         <div className={styles.greyBackground}>
           <Container className="py-4">
             <Row>
@@ -43,7 +42,7 @@ function Home(props) {
               <Col lg={3} md={3} sm={12} xs={12}>
                 <div className={styles.whiteBackground}>
                   <div className="pt-5">
-                    <Button className={styles.leftMenuButton}>
+                    <Button className={styles.leftMenuButtonSelected}>
                       <Image
                         src={dashboardIcon}
                         alt=""
@@ -81,7 +80,7 @@ function Home(props) {
               {/* RIGHT MENU */}
               <Col lg={8} md={8} sm={12} xs={12}>
                 <Row
-                  className={`p-4 ${styles.blueBackground} ${styles.whiteText}`}
+                  className={`p-4 mb-3 ${styles.blueBackground} ${styles.whiteText}`}
                 >
                   <Col lg={9} md={9} sm={9} xs={9}>
                     <span className="d-block">Balance</span>
@@ -96,7 +95,7 @@ function Home(props) {
                   </Col>
                 </Row>
                 {/* RIGHT MENU BOTTOM */}
-                <Col>Hey!</Col>
+                <Row className={`p-4 ${styles.whiteBackground}`}>Hey!</Row>
               </Col>
             </Row>
           </Container>

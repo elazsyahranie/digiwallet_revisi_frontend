@@ -5,7 +5,8 @@ import TempImgProfile from "/public/Rectangle 25.png";
 import BellLogo from "/public/bell_icon.png";
 import style from "/styles/navbar.module.css";
 
-function NavBar() {
+function NavBar(props) {
+  console.log(props);
   return (
     <>
       <Navbar expand="lg" className={style.navbarHeight}>
@@ -36,7 +37,7 @@ function NavBar() {
             </Nav>
             <Nav
               className={`justify-content-between`}
-              style={{ width: "260px" }}
+              style={{ minWidth: "260px" }}
             >
               <Nav.Item>
                 <Image
@@ -47,7 +48,9 @@ function NavBar() {
               </Nav.Item>
               <Nav.Item>
                 <div className={style.namePhoneNumber}>
-                  <span className="d-block fw-bold">Robert Chandler</span>
+                  <span className="d-block fw-bold">
+                    {props.data.user_name}
+                  </span>
                   <span className="d-block">+62 8139 3877 7946</span>
                 </div>
               </Nav.Item>

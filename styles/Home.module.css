@@ -30,7 +30,22 @@
   margin-bottom: 20px;
   color: black;
   background-color: transparent;
-  border: 2px solid #0070f3;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuButtonSelected,
+.leftMenuButtonSelected:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border-left: 5px solid #0070f3;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
   border-radius: 0px;
   display: flex;
 }
