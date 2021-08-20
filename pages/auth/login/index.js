@@ -44,6 +44,10 @@ function Login(props) {
             expires: 7,
             secure: true,
           });
+          Cookies.set("user_id", res.value.data.data.user_id, {
+            expires: 7,
+            secure: true,
+          });
           router.push("/");
         })
         .catch((err) => {

@@ -6,6 +6,8 @@ import Layout from "../components/Layout";
 import NavBar from "../components/module/NavBar";
 import Footer from "../components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
+import axiosApiIntances from "/utils/axios";
+import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
@@ -15,18 +17,21 @@ import profileIcon from "/public/group40.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
-  console.log(data);
-  // getUserbyId(data.id)
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  return { props: {} }; // untuk halaman yang ga perlu login
+  const userIdParsed = parseInt(data.userId);
+  const userData = await axiosApiIntances
+    .get(`/user/${userIdParsed}`)
+    .then((res) => {
+      return res.data; // return kalau hanya satu baris
+    })
+    .catch((err) => {
+      // console.log(err);
+      return [];
+    });
+  return { props: { users: userData } }; // untuk halaman yang ga perlu login
 }
 
 function Home(props) {
+  console.log(props);
   return (
     <>
       <Layout title="Home">
