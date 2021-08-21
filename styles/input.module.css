@@ -1,0 +1,82 @@
+.greyBackground {
+  background-color: #e5e5e5;
+}
+
+.mainRowMargin {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.whiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.leftColwhiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+  min-height: 100%;
+}
+
+.blueBackground {
+  background-color: #6379f4;
+  border-radius: 20px;
+}
+
+.whiteText {
+  color: white;
+}
+
+.transferTo {
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.leftMenuIcon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.leftMenuButton,
+.leftMenuButton:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuButtonSelected,
+.leftMenuButtonSelected:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border-left: 5px solid #0070f3;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuExplaination {
+  margin-left: 30px;
+}
+
+@media (max-width: 991.98px) {
+  .leftMenuExplaination {
+    margin-left: 15px;
+  }
+}
+
+.rightMenuButtonUp {
+  display: block;
+  width: 100%;
+}

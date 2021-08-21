@@ -1,13 +1,13 @@
-import Head from "next/head";
+// import Head from "next/head";
 import Image from "next/image";
 import styles from "/styles/dashboard.module.css";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
 import axiosApiIntances from "/utils/axios";
-import Cookie from "js-cookie";
+// import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
 import samuelSuhi from "/public/samuelSuhi.png";
@@ -33,7 +33,6 @@ export async function getServerSideProps(context) {
 }
 
 function Dashboard(props) {
-  console.log(props);
   return (
     <>
       <Layout title="Digiwallet | Dashboard">
@@ -144,7 +143,7 @@ function Dashboard(props) {
                       </Col>
                     </Row>
                     <Row style={{ minHeight: "120px" }}>
-                      <h6 className="text-center my-auto">Unavaibale</h6>
+                      <h6 className="text-center my-auto">Unavailable</h6>
                     </Row>
                   </Col>
                   <Col

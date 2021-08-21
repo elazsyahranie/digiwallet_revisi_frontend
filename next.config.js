@@ -22,6 +22,14 @@ module.exports = {
         source: "/dashboard", // pengganti path pada react js
         destination: "/dashboard", // lokasi path
       },
+      {
+        source: "/search", // pengganti path pada react js
+        destination: "/transfer/search", // lokasi path
+      },
+      {
+        source: "/input", // pengganti path pada react js
+        destination: "/transfer/input ", // lokasi path
+      },
     ];
   },
 };
