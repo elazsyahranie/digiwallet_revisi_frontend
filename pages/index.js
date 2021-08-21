@@ -38,31 +38,29 @@ function Home(props) {
       <Layout title="Digiwallet | Dashboard">
         <NavBar data={props.userInfo} />
         <div className={styles.greyBackground}>
-          <Container fluid="lg" className="py-4">
+          <Container fluid="sm" className="py-4">
             <Row>
               {/* LEFT MENU */}
-              <Col lg={3} md={4} sm={1} xs={1}>
+              <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={styles.whiteBackground}>
                   <div className={`pt-5`}>
-                    <div className={styles.leftMenu}>
-                      <Button className={styles.leftMenuButtonSelected}>
-                        <Image
-                          src={dashboardIcon}
-                          alt=""
-                          className={`img-fluid ${styles.leftMenuButtonIcon}`}
-                        ></Image>
-                      </Button>
-                      <Button className={styles.leftMenuExplaination}>
-                        <span>Dashboard</span>
-                      </Button>
-                    </div>
+                    <Button className={styles.leftMenuButtonSelected}>
+                      <Image
+                        src={dashboardIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Dashboard
+                      </span>
+                    </Button>
                     <Button className={styles.leftMenuButton}>
                       <Image
                         src={transferIcon}
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                      <span className={`${styles.leftMenuExplaination}`}>
                         Transfer
                       </span>
                     </Button>
@@ -72,7 +70,7 @@ function Home(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                      <span className={`${styles.leftMenuExplaination}`}>
                         Top Up
                       </span>
                     </Button>
@@ -82,7 +80,7 @@ function Home(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className={`mx-4 ${styles.menuExplaination}`}>
+                      <span className={`${styles.leftMenuExplaination}`}>
                         Profile
                       </span>
                     </Button>
@@ -90,7 +88,7 @@ function Home(props) {
                 </div>
               </Col>
               {/* RIGHT MENU */}
-              <Col lg={8} md={7} sm={11} xs={11}>
+              <Col lg={8} md={7} sm={12} xs={12}>
                 <Row
                   className={`p-4 mb-3 ${styles.blueBackground} ${styles.whiteText}`}
                 >
@@ -108,7 +106,7 @@ function Home(props) {
                 </Row>
                 {/* RIGHT MENU BOTTOM */}
                 <Row className={`p-4 ${styles.whiteBackground}`}>
-                  <Col lg={6} md={6} sm={6} xs={6}>
+                  <Col lg={9} md={9} sm={7} xs={7}>
                     <Row>
                       <div>
                         <Image
@@ -121,7 +119,7 @@ function Home(props) {
                       <h5>Rp2.120.000</h5>
                     </Row>
                   </Col>
-                  <Col lg={6} md={6} sm={6} xs={6}>
+                  <Col lg={3} md={3} sm={5} xs={5}>
                     <Row>
                       <div>
                         <Image
