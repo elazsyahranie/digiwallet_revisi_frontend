@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "/styles/input.module.css";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
@@ -13,6 +13,7 @@ import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
+import samuelSuhi from "/public/samuelSuhi.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -92,8 +93,35 @@ function Input(props) {
                 className={`p-4 ${styles.whiteBackground}`}
               >
                 <h5 className="pb-1">Transfer Money</h5>
-                <div className={styles.transferTo}>
-                  <span className="fw-bold">Samuel Suhi</span>
+                <div className={`p-3 d-flex ${styles.dropShadowBox} mb-3`}>
+                  <Image src={samuelSuhi} alt="" className="img-fluid"></Image>
+                  <Row className="mx-2">
+                    <span className="d-block fw-bold">Samuel Suhi</span>
+                    <span className="d-block">+62 813 08790890</span>
+                  </Row>
+                </div>
+                <div className={`p-3`}>
+                  <div className={styles.littleParagraph}>
+                    <p>
+                      Type the amount you want to transfer and then press
+                      continue to the next steps.
+                    </p>
+                  </div>
+                  <Form className={styles.nominalInputForm}>
+                    <Form.Control className={styles.nominalInput} type="text" />
+                  </Form>
+                  <div className={styles.nominalAvailableContainer}>
+                    <h6 className="text-center fw-bold">Rp120.000 available</h6>
+                  </div>
+                  <Form className={`mt-5 ${styles.someNotesForm}`}>
+                    <Form.Control
+                      className={styles.someNotes}
+                      placeholder="Some notes"
+                    />
+                  </Form>
+                  <div className="mt-5 mb-3 d-flex justify-content-end">
+                    <Button className={styles.continueButton}>Continue</Button>
+                  </div>
                 </div>
               </Col>
             </Row>

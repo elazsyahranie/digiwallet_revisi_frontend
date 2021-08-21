@@ -27,7 +27,7 @@
   color: white;
 }
 
-.transferTo {
+.dropShadowBox {
   background: #ffffff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -37,6 +37,10 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.littleParagraph {
+  max-width: 410px;
 }
 
 .leftMenuButton,
@@ -79,4 +83,40 @@
 .rightMenuButtonUp {
   display: block;
   width: 100%;
+}
+
+.nominalInputForm {
+  position: relative;
+  margin-top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 100px;
+}
+
+.nominalInput {
+  min-height: 59px;
+}
+
+.nominalAvailableContainer {
+  margin-top: 40px;
+}
+
+.someNotesForm {
+  position: relative;
+  max-width: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.someNotes {
+  min-height: 45px;
+}
+
+.continueButton,
+.continueButton:hover {
+  background-color: #6379f4;
+  border: 1px solid #6379f4;
+  height: 47px;
+  width: 160px;
+  border-radius: 12px;
 }
