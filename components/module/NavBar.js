@@ -6,14 +6,10 @@ import BellLogo from "/public/bell_icon.png";
 import style from "/styles/navbar.module.css";
 
 function NavBar(props) {
-  console.log(props);
   return (
     <>
       <Navbar expand="lg" className={style.navbarHeight}>
         <Container>
-          {/* <Navbar.Brand href="#home">
-            <Image src={ZwalletLogo} alt="" className="img-fluid"></Image>
-          </Navbar.Brand> */}
           <Navbar.Brand href="#home">
             <Image src={ZwalletLogo} className="d-inline-block align-top" />
           </Navbar.Brand>
@@ -49,7 +45,7 @@ function NavBar(props) {
               <Nav.Item>
                 <div className={style.namePhoneNumber}>
                   <span className="d-block fw-bold">
-                    {props.data.user_name}
+                    {props.data.userResult[0].user_name}
                   </span>
                   <span className="d-block">+62 8139 3877 7946</span>
                 </div>

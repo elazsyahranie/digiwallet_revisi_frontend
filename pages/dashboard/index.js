@@ -7,7 +7,7 @@ import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
 import axiosApiIntances from "/utils/axios";
-// import Cookie from "js-cookie";
+import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
 import samuelSuhi from "/public/samuelSuhi.png";
@@ -24,19 +24,35 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      return res.data.data[0];
+      console.log(res.data);
+      const allResult = {
+        userResult: res.data.data.result,
+        balanceResult: res.data.data.resultBalance,
+        transactionResult: res.data.data.resultTransactionHistory,
+      };
+      return allResult;
     })
     .catch((err) => {
       console.log(err);
     });
-  return { props: { userInfo: userData } };
+  return { props: { userData: userData } };
 }
 
 function Dashboard(props) {
+  // NAVIGATION HANDLING
+  const goToDashboard = (event) => {
+    event.preventDefault();
+    console.log("Go to dashboard!");
+  };
+
+  const goToTransfer = (event) => {
+    event.preventDefault();
+    console.log("Go to transfer!");
+  };
   return (
     <>
       <Layout title="Digiwallet | Dashboard">
-        <NavBar data={props.userInfo} />
+        <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
             <Row>
@@ -44,7 +60,10 @@ function Dashboard(props) {
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
                   <div className={`py-5`}>
-                    <Button className={styles.leftMenuButtonSelected}>
+                    <Button
+                      className={styles.leftMenuButtonSelected}
+                      onClick={(event) => goToDashboard(event)}
+                    >
                       <Image
                         src={dashboardIcon}
                         alt=""
@@ -54,7 +73,10 @@ function Dashboard(props) {
                         Dashboard
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={(event) => goToTransfer(event)}
+                    >
                       <Image
                         src={transferIcon}
                         alt=""
@@ -94,7 +116,11 @@ function Dashboard(props) {
                 >
                   <Col lg={9} md={9} sm={9} xs={9}>
                     <span className="d-block">Balance</span>
-                    <h2>Rp120.000</h2>
+                    {props.userData.balanceResult ? (
+                      <h2>{props.userData.balanceResult[0].balance}</h2>
+                    ) : (
+                      <h2>0</h2>
+                    )}
                     <span className="d-block">+62 813-9387-7946</span>
                   </Col>
                   <Col lg={3} md={3} sm={3} xs={3}>
