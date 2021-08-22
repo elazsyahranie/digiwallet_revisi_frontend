@@ -1,11 +1,12 @@
-import Head from "next/head";
 import Image from "next/image";
+import React, { useState } from "react";
 import styles from "/styles/search.module.css";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
+import router from "next/router";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
@@ -20,19 +21,46 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      return res.data.data[0];
+      console.log(res.data);
+      const allResult = {
+        userResult: res.data.data.result,
+        balanceResult: res.data.data.resultBalance,
+        transactionResult: res.data.data.resultTransactionHistory,
+      };
+      return allResult;
     })
     .catch((err) => {
       console.log(err);
     });
-  return { props: { userInfo: userData } };
+  return { props: { userData: userData } };
 }
 
 function Transfer(props) {
+  const [searchForm, setSearchForm] = useState({ keyword: "" });
+
+  const handleSearchBar = (event) => {
+    event.preventDefault();
+    setSearchForm({ ...searchForm, [event.target.name]: event.target.value });
+  };
+
+  const sendKeyword = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      console.log(searchForm);
+    }
+  };
+
+  const goToDashboard = () => {
+    router.push("/dashboard");
+  };
+
+  const goToTransfer = () => {
+    router.push("/search");
+  };
   return (
     <>
       <Layout title="Digiwallet | Search">
-        <NavBar data={props.userInfo} />
+        <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
             <Row>
@@ -40,7 +68,10 @@ function Transfer(props) {
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
                   <div className={`py-5`}>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToDashboard()}
+                    >
                       <Image
                         src={dashboardIcon}
                         alt=""
@@ -50,7 +81,10 @@ function Transfer(props) {
                         Dashboard
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButtonSelected}>
+                    <Button
+                      className={styles.leftMenuButtonSelected}
+                      onClick={() => goToTransfer()}
+                    >
                       <Image
                         src={transferIcon}
                         alt=""
@@ -94,7 +128,14 @@ function Transfer(props) {
                 <h5 className="pb-1">Search receiver</h5>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="text" placeholder="Enter receiver" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter receiver"
+                      name="keyword"
+                      onChange={(event) => handleSearchBar(event)}
+                      onKeyDown={(event) => sendKeyword(event)}
+                      required
+                    />
                   </Form.Group>
                 </Form>
               </Col>

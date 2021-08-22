@@ -1,4 +1,3 @@
-// import Head from "next/head";
 import Image from "next/image";
 import styles from "/styles/dashboard.module.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -7,7 +6,7 @@ import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
 import axiosApiIntances from "/utils/axios";
-import { useRouter } from "next/router";
+import router from "next/router";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
 import samuelSuhi from "/public/samuelSuhi.png";
@@ -40,14 +39,12 @@ export async function getServerSideProps(context) {
 
 function Dashboard(props) {
   // NAVIGATION HANDLING
-  const goToDashboard = (event) => {
-    event.preventDefault();
-    console.log("Go to dashboard!");
+  const goToDashboard = () => {
+    router.push("/dashboard");
   };
 
-  const goToTransfer = (event) => {
-    event.preventDefault();
-    console.log("Go to transfer!");
+  const goToTransfer = () => {
+    router.push("/search");
   };
   return (
     <>
@@ -62,7 +59,7 @@ function Dashboard(props) {
                   <div className={`py-5`}>
                     <Button
                       className={styles.leftMenuButtonSelected}
-                      onClick={(event) => goToDashboard(event)}
+                      onClick={() => goToDashboard()}
                     >
                       <Image
                         src={dashboardIcon}
@@ -75,7 +72,7 @@ function Dashboard(props) {
                     </Button>
                     <Button
                       className={styles.leftMenuButton}
-                      onClick={(event) => goToTransfer(event)}
+                      onClick={() => goToTransfer()}
                     >
                       <Image
                         src={transferIcon}
