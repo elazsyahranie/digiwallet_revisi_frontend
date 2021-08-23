@@ -75,6 +75,15 @@
   }
 }
 
+.noProfilePictureAvailable {
+  border-radius: 10px;
+}
+
+.userSearchResultBox {
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px 0px #0000000d;
+}
+
 /* @media (max-width: 822px) {
   .menuExplaination {
     display: none;

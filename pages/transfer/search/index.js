@@ -9,11 +9,12 @@ import { authPage } from "middleware/authorizationPage";
 import router from "next/router";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
-import { getUserbyId } from "/redux/actions/user";
+import { getUserbyId, getUserbyKeyword } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
+import noProfilePicture from "/public/img-not-found.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -46,7 +47,14 @@ function Transfer(props) {
   const sendKeyword = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
-      console.log(searchForm);
+      props
+        .getUserbyKeyword(searchForm.keyword)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -127,7 +135,7 @@ function Transfer(props) {
               >
                 <h5 className="pb-1">Search receiver</h5>
                 <Form>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3" controlId="formBasicSearch">
                     <Form.Control
                       type="text"
                       placeholder="Enter receiver"
@@ -138,6 +146,21 @@ function Transfer(props) {
                     />
                   </Form.Group>
                 </Form>
+                <div className={`p-2 d-flex ${styles.userSearchResultBox}`}>
+                  <div className={`pe-4`}>
+                    <Image
+                      src={noProfilePicture}
+                      width={50}
+                      height={50}
+                      alt=""
+                      className={`img-fluid ${styles.noProfilePictureAvailable}`}
+                    />
+                  </div>
+                  <Row>
+                    <span className="fw-bold">Samuel Suhi</span>
+                    <span className="fst-italic">Phone Number Unavailable</span>
+                  </Row>
+                </div>
               </Col>
             </Row>
           </Container>
@@ -153,6 +176,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchtoProps = { getUserbyId };
+const mapDispatchtoProps = { getUserbyId, getUserbyKeyword };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Transfer);

@@ -6,3 +6,10 @@ export const getUserbyId = (id) => {
     payload: axiosApiIntances.get(`/user/${id}`),
   };
 };
+
+export const getUserbyKeyword = (keyword) => {
+  return {
+    type: "GET_USER_BY_KEYWORD",
+    payload: axiosApiIntances.get(`/user/keyword?keyword=${keyword}`),
+  };
+};

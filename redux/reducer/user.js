@@ -1,5 +1,5 @@
 const initialState = {
-  data: {},
+  data: [],
   isLoading: false,
   isError: false,
   msg: "",
@@ -26,7 +26,29 @@ const user = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: {},
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
+    case "GET_USER_BY_KEYWORD_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case "GET_USER_BY_KEYWORD_FULFILLED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "GET_USER_BY_KEYWORD_REJECTED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
         msg: action.payload.response.data.msg,
       };
     default:
