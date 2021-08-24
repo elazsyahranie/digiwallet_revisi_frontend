@@ -22,6 +22,7 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
+      console.log(res.data);
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
@@ -46,7 +47,7 @@ function Input(props) {
   return (
     <>
       <Layout title="Digiwallet | Input">
-        <NavBar data={props.userData} />
+        {/* <NavBar data={props.userData} /> */}
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
             <Row>

@@ -23,7 +23,6 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      console.log(res.data);
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
@@ -46,6 +45,9 @@ function Dashboard(props) {
   const goToTransfer = () => {
     router.push("/search");
   };
+
+  console.log(props.userData);
+
   return (
     <>
       <Layout title="Digiwallet | Dashboard">
@@ -113,7 +115,7 @@ function Dashboard(props) {
                 >
                   <Col lg={9} md={9} sm={9} xs={9}>
                     <span className="d-block">Balance</span>
-                    {props.userData.balanceResult ? (
+                    {props.userData.balanceResult[0].balance ? (
                       <h2>{props.userData.balanceResult[0].balance}</h2>
                     ) : (
                       <h2>0</h2>
