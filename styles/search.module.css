@@ -82,6 +82,7 @@
 .userSearchResultBox {
   border-radius: 10px;
   box-shadow: 0px 4px 20px 0px #0000000d;
+  cursor: pointer;
 }
 
 /* @media (max-width: 822px) {

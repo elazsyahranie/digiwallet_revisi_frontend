@@ -8,6 +8,7 @@ import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
+import router from "next/router";
 import { getUserbyId } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
@@ -21,19 +22,31 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      return res.data.data[0];
+      const allResult = {
+        userResult: res.data.data.result,
+        balanceResult: res.data.data.resultBalance,
+        transactionResult: res.data.data.resultTransactionHistory,
+      };
+      return allResult;
     })
     .catch((err) => {
       console.log(err);
     });
-  return { props: { userInfo: userData } };
+  return { props: { userData: userData } };
 }
 
 function Input(props) {
+  const goToDashboard = () => {
+    router.push("/dashboard");
+  };
+
+  const goToTransfer = () => {
+    router.push("/search");
+  };
   return (
     <>
       <Layout title="Digiwallet | Input">
-        <NavBar data={props.userInfo} />
+        <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
             <Row>
@@ -41,7 +54,10 @@ function Input(props) {
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
                   <div className={`py-5`}>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToDashboard()}
+                    >
                       <Image
                         src={dashboardIcon}
                         alt=""
@@ -51,7 +67,10 @@ function Input(props) {
                         Dashboard
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButtonSelected}>
+                    <Button
+                      className={styles.leftMenuButtonSelected}
+                      onClick={() => goToTransfer()}
+                    >
                       <Image
                         src={transferIcon}
                         alt=""

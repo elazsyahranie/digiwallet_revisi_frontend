@@ -22,7 +22,6 @@ export async function getServerSideProps(context) {
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      console.log(res.data);
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
@@ -38,6 +37,7 @@ export async function getServerSideProps(context) {
 
 function Transfer(props) {
   const [searchForm, setSearchForm] = useState({ keyword: "" });
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleSearchBar = (event) => {
     event.preventDefault();
@@ -50,12 +50,16 @@ function Transfer(props) {
       props
         .getUserbyKeyword(searchForm.keyword)
         .then((res) => {
-          console.log(res);
+          setSearchResult(res.value.data.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
+  };
+
+  const goToInputPage = (user_id) => {
+    console.log(user_id);
   };
 
   const goToDashboard = () => {
@@ -65,6 +69,7 @@ function Transfer(props) {
   const goToTransfer = () => {
     router.push("/search");
   };
+
   return (
     <>
       <Layout title="Digiwallet | Search">
@@ -146,21 +151,32 @@ function Transfer(props) {
                     />
                   </Form.Group>
                 </Form>
-                <div className={`p-2 d-flex ${styles.userSearchResultBox}`}>
-                  <div className={`pe-4`}>
-                    <Image
-                      src={noProfilePicture}
-                      width={50}
-                      height={50}
-                      alt=""
-                      className={`img-fluid ${styles.noProfilePictureAvailable}`}
-                    />
-                  </div>
-                  <Row>
-                    <span className="fw-bold">Samuel Suhi</span>
-                    <span className="fst-italic">Phone Number Unavailable</span>
-                  </Row>
-                </div>
+                {searchResult.length < 0
+                  ? null
+                  : searchResult.map((item, index) => {
+                      return (
+                        <div
+                          className={`p-2 d-flex ${styles.userSearchResultBox}`}
+                          onClick={() => goToInputPage(item.user_id)}
+                        >
+                          <div className={`pe-4`}>
+                            <Image
+                              src={noProfilePicture}
+                              width={50}
+                              height={50}
+                              alt=""
+                              className={`img-fluid ${styles.noProfilePictureAvailable}`}
+                            />
+                          </div>
+                          <Row>
+                            <span className="fw-bold">{item.user_name}</span>
+                            <span className="fst-italic">
+                              Phone Number Unavailable
+                            </span>
+                          </Row>
+                        </div>
+                      );
+                    })}
               </Col>
             </Row>
           </Container>
