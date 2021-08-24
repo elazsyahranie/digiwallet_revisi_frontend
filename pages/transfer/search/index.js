@@ -59,7 +59,7 @@ function Transfer(props) {
   };
 
   const goToInputPage = (user_id) => {
-    console.log(user_id);
+    router.push(`/transfer/input/${user_id}`);
   };
 
   const goToDashboard = () => {

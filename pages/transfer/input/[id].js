@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "/styles/input.module.css";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
 import Layout from "/components/Layout";
+import { useState } from "react";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
@@ -18,11 +19,13 @@ import samuelSuhi from "/public/samuelSuhi.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
+  const { id } = context.query; // ID in query. ID of receiver user
+  const receiverId = id;
   const userIdParsed = parseInt(data.userId);
   const userData = await axiosApiIntances
     .get(`user/${userIdParsed}`)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
@@ -33,10 +36,44 @@ export async function getServerSideProps(context) {
     .catch((err) => {
       console.log(err);
     });
-  return { props: { userData: userData } };
+  const userReceiver = await axiosApiIntances
+    .get(`user/${receiverId}`)
+    .then((res) => {
+      const allReceiverResult = {
+        userResult: res.data.data.result,
+        balanceResult: res.data.data.resultBalance,
+        transactionResult: res.data.data.resultTransactionHistory,
+      };
+      return allReceiverResult;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return { props: { userData: userData, userReceiver: userReceiver } };
 }
 
 function Input(props) {
+  const [transactionModal, setTransactionModal] = useState(false);
+  const closeTransactionModal = () => setTransactionModal(false);
+  const showTransactionModal = () => setTransactionModal(true);
+  const [transaction, setTransaction] = useState({
+    senderId: props.userData.userResult[0].user_id,
+    senderPin: "",
+    receiverId: props.userReceiver.userResult[0].user_id,
+    transactionValue: "",
+    transactionNotes: "",
+  });
+
+  const handleTransfer = (event) => {
+    event.preventDefault();
+    setTransaction({ ...transaction, [event.target.name]: event.target.value });
+  };
+
+  const submitTransfer = (event) => {
+    event.preventDefault();
+    console.log(transaction);
+  };
+
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -44,10 +81,38 @@ function Input(props) {
   const goToTransfer = () => {
     router.push("/search");
   };
+
+  // console.log(props.userReceiver.userResult[0].user_id);
+  const { user_name } = props.userReceiver.userResult[0];
   return (
     <>
       <Layout title="Digiwallet | Input">
-        {/* <NavBar data={props.userData} /> */}
+        <Modal show={transactionModal} onHide={closeTransactionModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Enter PIN to transfer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Enter your 6 digits PIN for confirmation to continue transferring
+              money.{" "}
+            </p>
+            <Form>
+              <Form.Control
+                name="senderPin"
+                onChange={(event) => handleTransfer(event)}
+              />
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeTransactionModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={submitTransfer}>
+              Continue
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
             <Row>
@@ -116,7 +181,7 @@ function Input(props) {
                 <div className={`p-3 d-flex ${styles.dropShadowBox} mb-3`}>
                   <Image src={samuelSuhi} alt="" className="img-fluid"></Image>
                   <Row className="mx-2">
-                    <span className="d-block fw-bold">Samuel Suhi</span>
+                    <span className="d-block fw-bold">{user_name}</span>
                     <span className="d-block">+62 813 08790890</span>
                   </Row>
                 </div>
@@ -128,7 +193,12 @@ function Input(props) {
                     </p>
                   </div>
                   <Form className={styles.nominalInputForm}>
-                    <Form.Control className={styles.nominalInput} type="text" />
+                    <Form.Control
+                      className={styles.nominalInput}
+                      type="number"
+                      name="transactionValue"
+                      onChange={(event) => handleTransfer(event)}
+                    />
                   </Form>
                   <div className={styles.nominalAvailableContainer}>
                     <h6 className="text-center fw-bold">Rp120.000 available</h6>
@@ -137,10 +207,17 @@ function Input(props) {
                     <Form.Control
                       className={styles.someNotes}
                       placeholder="Some notes"
+                      name="transactionNotes"
+                      onChange={(event) => handleTransfer(event)}
                     />
                   </Form>
                   <div className="mt-5 mb-3 d-flex justify-content-end">
-                    <Button className={styles.continueButton}>Continue</Button>
+                    <Button
+                      className={styles.continueButton}
+                      onClick={showTransactionModal}
+                    >
+                      Continue
+                    </Button>
                   </div>
                 </div>
               </Col>
