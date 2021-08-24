@@ -100,46 +100,10 @@ function insertpin(props) {
                     <div>
                       <span>Insert PIN</span>
                     </div>
-                    <Form.Group
-                      className={`mb-3`}
-                      controlId="formBasicEmail"
-                      style={{ width: "100%", display: "flex" }}
-                    >
+                    <Form.Group className={`mb-3`} controlId="formBasicEmail">
                       <Form.Control
                         type="text"
                         name="userPin"
-                        style={{ width: "10%" }}
-                        maxLength="1"
-                        onChange={(event) => changeText(event)}
-                      />
-                      <Form.Control
-                        type="text"
-                        name="userPin"
-                        style={{ width: "10%" }}
-                        onChange={(event) => changeText(event)}
-                      />
-                      <Form.Control
-                        type="text"
-                        name="userPin"
-                        style={{ width: "10%" }}
-                        onChange={(event) => changeText(event)}
-                      />
-                      <Form.Control
-                        type="text"
-                        name="userPin"
-                        style={{ width: "10%" }}
-                        onChange={(event) => changeText(event)}
-                      />
-                      <Form.Control
-                        type="text"
-                        name="userPin"
-                        style={{ width: "10%" }}
-                        onChange={(event) => changeText(event)}
-                      />
-                      <Form.Control
-                        type="text"
-                        name="userPin"
-                        style={{ width: "10%" }}
                         onChange={(event) => changeText(event)}
                       />
                     </Form.Group>

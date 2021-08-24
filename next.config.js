@@ -26,10 +26,6 @@ module.exports = {
         source: "/search", // pengganti path pada react js
         destination: "/transfer/search", // lokasi path
       },
-      {
-        source: "/input", // pengganti path pada react js
-        destination: "/transfer/input ", // lokasi path
-      },
     ];
   },
 };

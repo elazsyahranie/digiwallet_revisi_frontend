@@ -1,7 +1,15 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "/styles/input.module.css";
-import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Modal,
+  Alert,
+} from "react-bootstrap";
 import Layout from "/components/Layout";
 import { useState } from "react";
 import NavBar from "/components/module/NavBar";
@@ -11,6 +19,7 @@ import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
 import router from "next/router";
 import { getUserbyId } from "/redux/actions/user";
+import { makeTransaction } from "/redux/actions/transaction";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
@@ -53,9 +62,13 @@ export async function getServerSideProps(context) {
 }
 
 function Input(props) {
-  const [transactionModal, setTransactionModal] = useState(false);
-  const closeTransactionModal = () => setTransactionModal(false);
-  const showTransactionModal = () => setTransactionModal(true);
+  // TRANSACTION ERROR HANDLER
+  const [noTransactionValue, setNoTransactionValue] = useState(false);
+
+  // TRANSACION SUCCESS HANDLER
+  const [transactionSuccess, setTransactionSuccess] = useState(false);
+
+  // TRANSACTION
   const [transaction, setTransaction] = useState({
     senderId: props.userData.userResult[0].user_id,
     senderPin: "",
@@ -64,6 +77,19 @@ function Input(props) {
     transactionNotes: "",
   });
 
+  // MODAL
+  const [transactionModal, setTransactionModal] = useState(false);
+  const closeTransactionModal = () => setTransactionModal(false);
+  const showTransactionModal = () => {
+    if (!transaction.transactionValue) {
+      setNoTransactionValue(true);
+    } else {
+      setTransactionModal(true);
+      setNoTransactionValue(false);
+    }
+  };
+
+  // ========= //
   const handleTransfer = (event) => {
     event.preventDefault();
     setTransaction({ ...transaction, [event.target.name]: event.target.value });
@@ -72,6 +98,16 @@ function Input(props) {
   const submitTransfer = (event) => {
     event.preventDefault();
     console.log(transaction);
+    props
+      .makeTransaction({ ...transaction })
+      .then((res) => {
+        console.log(res);
+        setTransactionSuccess(true);
+        closeTransactionModal(true);
+      })
+      .then((err) => {
+        console.log(err);
+      });
   };
 
   const goToDashboard = () => {
@@ -94,11 +130,12 @@ function Input(props) {
           <Modal.Body>
             <p>
               Enter your 6 digits PIN for confirmation to continue transferring
-              money.{" "}
+              money.
             </p>
             <Form>
               <Form.Control
                 name="senderPin"
+                type="password"
                 onChange={(event) => handleTransfer(event)}
               />
             </Form>
@@ -211,6 +248,16 @@ function Input(props) {
                       onChange={(event) => handleTransfer(event)}
                     />
                   </Form>
+                  {noTransactionValue && (
+                    <Alert className="mt-5" variant="danger">
+                      Please insert transaction value!
+                    </Alert>
+                  )}
+                  {transactionSuccess && (
+                    <Alert className="mt-5" variant="success">
+                      Transaction success
+                    </Alert>
+                  )}
                   <div className="mt-5 mb-3 d-flex justify-content-end">
                     <Button
                       className={styles.continueButton}
@@ -233,8 +280,9 @@ function Input(props) {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   user: state.user,
+  transaction: state.transaction,
 });
 
-const mapDispatchtoProps = { getUserbyId };
+const mapDispatchtoProps = { getUserbyId, makeTransaction };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Input);
