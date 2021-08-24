@@ -33,6 +33,15 @@
   border-radius: 10px;
 }
 
+.insertPinForm {
+  width: 100%;
+  display: flex;
+}
+
+.insertPinInput {
+  width: 20% !important;
+}
+
 .leftMenuIcon {
   position: relative;
   top: 50%;
