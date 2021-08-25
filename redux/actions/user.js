@@ -13,3 +13,10 @@ export const getUserbyKeyword = (keyword) => {
     payload: axiosApiIntances.get(`/user/keyword?keyword=${keyword}`),
   };
 };
+
+export const insertPin = (id, userPin) => {
+  return {
+    type: "INSERT_PIN",
+    payload: axiosApiIntances.patch(`/user/update-pin/${id}`, userPin),
+  };
+};

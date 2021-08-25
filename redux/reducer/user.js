@@ -51,6 +51,28 @@ const user = (state = initialState, action) => {
         data: [],
         msg: action.payload.response.data.msg,
       };
+    case "INSERT_PIN_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case "INSERT_PIN_FULFILLED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "INSERT_PIN_REJECTED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
     default:
       return state;
   }

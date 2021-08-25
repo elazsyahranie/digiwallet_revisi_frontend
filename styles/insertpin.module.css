@@ -15,6 +15,12 @@
   justify-content: center;
 }
 
+/* .insertPin {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+} */
+
 .lineHeight2dot5 {
   line-height: 2.5rem;
 }
