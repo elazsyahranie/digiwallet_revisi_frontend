@@ -47,6 +47,9 @@ export async function getServerSideProps(context) {
 }
 
 function Dashboard(props) {
+  // console.log(props.userData.userResult[0]);
+  const userId = props.userData.userResult[0].user_id;
+  // console.log(userId);
   // TOOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
 
@@ -71,23 +74,24 @@ function Dashboard(props) {
     setTopUpSuccess(false);
   };
 
+  const { balanceTopUp } = topUpAmount;
+
   const submitTopUp = (event) => {
     event.preventDefault();
     if (!topUpAmount.balanceTopUp) {
       setTopUpAmountNull(true);
     } else {
-      console.log(topUpAmount.balanceTopUp);
-      console.log(typeof topUpAmount.balanceTopUp);
-      setTopUpSuccess(true);
-      // props
-      //   .topUpBalance(balanceTopUp.topUpAmount)
-      //   .then((res) => {
-      //     console.log(res);
-      //     setTopUpSuccess(true);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      // console.log(topUpAmount.balanceTopUp);
+      // console.log(typeof topUpAmount.balanceTopUp);
+      props
+        .topUpBalance(userId, { balanceTopUp })
+        .then((res) => {
+          console.log(res);
+          setTopUpSuccess(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

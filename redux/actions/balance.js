@@ -1,8 +1,8 @@
 import axiosApiIntances from "../../utils/axios";
 
-export const topUpBalance = (id, data) => {
+export const topUpBalance = (id, balanceTopUp) => {
   return {
     type: "TOP_UP_BALANCE",
-    payload: axiosApiIntances.post(`balance/top-up/${id}`, data),
+    payload: axiosApiIntances.patch(`balance/top-up/${id}`, balanceTopUp),
   };
 };
