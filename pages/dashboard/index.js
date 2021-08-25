@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
-        transactionResult: res.data.data.resultTransactionHistory,
+        // transactionResult: res.data.data.resultTransactionHistory,
       };
       return allResult;
     })
@@ -81,8 +81,6 @@ function Dashboard(props) {
     if (!topUpAmount.balanceTopUp) {
       setTopUpAmountNull(true);
     } else {
-      // console.log(topUpAmount.balanceTopUp);
-      // console.log(typeof topUpAmount.balanceTopUp);
       props
         .topUpBalance(userId, { balanceTopUp })
         .then((res) => {
