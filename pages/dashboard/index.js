@@ -1,10 +1,19 @@
 import Image from "next/image";
 import styles from "/styles/dashboard.module.css";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Form,
+  Alert,
+} from "react-bootstrap";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
 import { authPage } from "middleware/authorizationPage";
+import { useState } from "react";
 import axiosApiIntances from "/utils/axios";
 import router from "next/router";
 import { connect } from "react-redux";
@@ -37,6 +46,37 @@ export async function getServerSideProps(context) {
 }
 
 function Dashboard(props) {
+  // TOOP UP MODAL HANDLING
+  const [topUpModal, setTopUpModal] = useState(false);
+
+  const closeTopUpModal = () => setTopUpModal(false);
+  const showTopUpModal = () => setTopUpModal(true);
+
+  // TOP UP AMOUNT HANDLING
+  const [topUpAmount, setTopUpAmount] = useState("");
+
+  // TOP UP ALERT HANDLING
+  const [topUpAmountNull, setTopUpAmountNull] = useState(false);
+  const [topUpFailed, setTopUpAmountFailed] = useState(false);
+  const [topUpSuccess, setTopUpSuccess] = useState(false);
+
+  const handleTopUpAmount = (event) => {
+    event.preventDefault();
+    setTopUpAmount({ ...topUpAmount, [event.target.name]: event.target.value });
+    setTopUpAmountNull(false);
+    setTopUpSuccess(false);
+  };
+
+  const submitTopUp = (event) => {
+    event.preventDefault();
+    if (topUpAmount <= 0) {
+      setTopUpAmountNull(true);
+    } else {
+      console.log(topUpAmount);
+      setTopUpSuccess(true);
+    }
+  };
+
   // NAVIGATION HANDLING
   const goToDashboard = () => {
     router.push("/dashboard");
@@ -46,10 +86,45 @@ function Dashboard(props) {
     router.push("/search");
   };
 
-  console.log(props.userData);
-
   return (
     <>
+      <Modal show={topUpModal} onHide={closeTopUpModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Top Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Input how much amount would you like to add to your wallet
+          <Form>
+            <Form.Control
+              type="number"
+              name="topUpAmount"
+              onChange={(event) => handleTopUpAmount(event)}
+            />
+          </Form>
+          {topUpAmountNull && (
+            <div>
+              <Alert className="mt-4" variant="danger">
+                Please enter the amount!
+              </Alert>
+            </div>
+          )}
+          {topUpSuccess && (
+            <div>
+              <Alert className="mt-4" variant="success">
+                Top up success!
+              </Alert>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeTopUpModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={(event) => submitTopUp(event)}>
+            Top Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Layout title="Digiwallet | Dashboard">
         <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
@@ -81,7 +156,10 @@ function Dashboard(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span className={`${styles.leftMenuExplaination}`}>
+                      <span
+                        className={`${styles.leftMenuExplaination}`}
+                        onClick={() => goToTransfer()}
+                      >
                         Transfer
                       </span>
                     </Button>
@@ -123,10 +201,18 @@ function Dashboard(props) {
                     <span className="d-block">+62 813-9387-7946</span>
                   </Col>
                   <Col lg={3} md={3} sm={3} xs={3}>
-                    <Button className={styles.rightMenuButtonUp}>
+                    <Button
+                      className={styles.rightMenuButtonUp}
+                      onClick={() => goToTransfer()}
+                    >
                       Transfer
                     </Button>
-                    <Button className={styles.rightMenuButtonUp}>Top Up</Button>
+                    <Button
+                      className={styles.rightMenuButtonUp}
+                      onClick={() => showTopUpModal()}
+                    >
+                      Top Up
+                    </Button>
                   </Col>
                 </Row>
                 {/* RIGHT MENU BOTTOM */}

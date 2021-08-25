@@ -97,7 +97,6 @@ function Input(props) {
 
   const submitTransfer = (event) => {
     event.preventDefault();
-    console.log(transaction);
     props
       .makeTransaction({ ...transaction })
       .then((res) => {
