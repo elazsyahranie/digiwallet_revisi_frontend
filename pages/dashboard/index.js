@@ -18,6 +18,7 @@ import axiosApiIntances from "/utils/axios";
 import router from "next/router";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
+import { topUpBalance } from "/redux/actions/balance";
 import samuelSuhi from "/public/samuelSuhi.png";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
@@ -53,7 +54,7 @@ function Dashboard(props) {
   const showTopUpModal = () => setTopUpModal(true);
 
   // TOP UP AMOUNT HANDLING
-  const [topUpAmount, setTopUpAmount] = useState("");
+  const [topUpAmount, setTopUpAmount] = useState({ balanceTopUp: "" });
 
   // TOP UP ALERT HANDLING
   const [topUpAmountNull, setTopUpAmountNull] = useState(false);
@@ -62,18 +63,31 @@ function Dashboard(props) {
 
   const handleTopUpAmount = (event) => {
     event.preventDefault();
-    setTopUpAmount({ ...topUpAmount, [event.target.name]: event.target.value });
+    setTopUpAmount({
+      ...topUpAmount,
+      [event.target.name]: event.target.value,
+    });
     setTopUpAmountNull(false);
     setTopUpSuccess(false);
   };
 
   const submitTopUp = (event) => {
     event.preventDefault();
-    if (topUpAmount <= 0) {
+    if (!topUpAmount.balanceTopUp) {
       setTopUpAmountNull(true);
     } else {
-      console.log(topUpAmount);
+      console.log(topUpAmount.balanceTopUp);
+      console.log(typeof topUpAmount.balanceTopUp);
       setTopUpSuccess(true);
+      // props
+      //   .topUpBalance(balanceTopUp.topUpAmount)
+      //   .then((res) => {
+      //     console.log(res);
+      //     setTopUpSuccess(true);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     }
   };
 
@@ -97,7 +111,7 @@ function Dashboard(props) {
           <Form>
             <Form.Control
               type="number"
-              name="topUpAmount"
+              name="balanceTopUp"
               onChange={(event) => handleTopUpAmount(event)}
             />
           </Form>
@@ -392,8 +406,9 @@ function Dashboard(props) {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   user: state.user,
+  balance: state.balance,
 });
 
-const mapDispatchtoProps = { getUserbyId };
+const mapDispatchtoProps = { getUserbyId, topUpBalance };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Dashboard);
