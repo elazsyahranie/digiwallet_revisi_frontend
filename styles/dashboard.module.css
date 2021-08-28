@@ -75,6 +75,32 @@
   }
 }
 
+/* LOG OUT BUTTON */
+.logOutButton,
+.logOutButton:hover {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+/* LOG OUT BUTTON */
+
+.sentTransfer {
+  font-weight: bold;
+  color: #ff5b37;
+}
+
+.receivedTransfer {
+  font-weight: bold;
+  color: #1ec15f;
+}
+
 /* @media (max-width: 822px) {
   .menuExplaination {
     display: none;

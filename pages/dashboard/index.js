@@ -26,6 +26,7 @@ import topUpIcon from "/public/plus.png";
 import greenTopUpIcon from "/public/in2.png";
 import redIcon from "/public/out2.png";
 import profileIcon from "/public/group40.png";
+import logOutIcon from "/public/log-out.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -43,14 +44,24 @@ export async function getServerSideProps(context) {
     .catch((err) => {
       console.log(err);
     });
-  return { props: { userData: userData } };
+
+  const userTransactionHistory = await axiosApiIntances
+    .get(`transaction/get-transaction/${data.userId}?limit=4`)
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return {
+    props: { userData: userData, transactionHistory: userTransactionHistory },
+  };
 }
 
 function Dashboard(props) {
-  // console.log(props.userData.userResult[0]);
   const userId = props.userData.userResult[0].user_id;
   // console.log(userId);
-  // TOOP UP MODAL HANDLING
+  // TOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
 
   const closeTopUpModal = () => setTopUpModal(false);
@@ -149,7 +160,7 @@ function Dashboard(props) {
               {/* LEFT MENU */}
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
-                  <div className={`py-5`}>
+                  <div className={`py-5 position-relative h-100`}>
                     <Button
                       className={styles.leftMenuButtonSelected}
                       onClick={() => goToDashboard()}
@@ -199,6 +210,16 @@ function Dashboard(props) {
                         Profile
                       </span>
                     </Button>
+                    <Button className={styles.logOutButton}>
+                      <Image
+                        src={logOutIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Log Out
+                      </span>
+                    </Button>
                   </div>
                 </div>
               </Col>
@@ -210,9 +231,12 @@ function Dashboard(props) {
                   <Col lg={9} md={9} sm={9} xs={9}>
                     <span className="d-block">Balance</span>
                     {props.userData.balanceResult[0].balance ? (
-                      <h2>{props.userData.balanceResult[0].balance}</h2>
+                      <h2>
+                        Rp
+                        {props.userData.balanceResult[0].balance.toLocaleString()}
+                      </h2>
                     ) : (
-                      <h2>0</h2>
+                      <h2>Rp.0,00</h2>
                     )}
                     <span className="d-block">+62 813-9387-7946</span>
                   </Col>
@@ -289,110 +313,67 @@ function Dashboard(props) {
                         <span>See all</span>
                       </Col>
                     </Row>
-                    <Row className={`mb-4`}>
-                      <Col lg={3} md={3} sm={3} xs={3}>
-                        <div className="d-flex align-items-center">
-                          <Image
-                            src={samuelSuhi}
-                            alt=""
-                            className="img-fluid"
-                          ></Image>
-                        </div>
-                      </Col>
-                      <Col lg={5} md={5} sm={5} xs={5}>
-                        <Row>
-                          <span className="d-block fw-bold">Samuel Suhi</span>
-                          <span className="d-block">Transfer</span>
+                    {props.transactionHistory.map((element, index) => {
+                      console.log(element);
+                      return (
+                        <Row className={`mb-4`} key={index}>
+                          <Col
+                            lg={3}
+                            md={3}
+                            sm={3}
+                            xs={3}
+                            className="d-flex align-items-center"
+                          >
+                            <div>
+                              <Image
+                                src={samuelSuhi}
+                                alt=""
+                                className="img-fluid my-auto"
+                              ></Image>
+                            </div>
+                          </Col>
+                          <Col
+                            lg={5}
+                            md={5}
+                            sm={5}
+                            xs={5}
+                            className="d-flex align-items-center"
+                          >
+                            <Row>
+                              <span className="d-block fw-bold">
+                                {element.user_name}
+                              </span>
+                              {element.transaction_sender_id === userId ? (
+                                <span className="d-block">Transfer</span>
+                              ) : (
+                                <span className="d-block">Receipent</span>
+                              )}
+                            </Row>
+                          </Col>
+                          <Col
+                            lg={3}
+                            md={3}
+                            sm={3}
+                            xs={3}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            {element.transaction_sender_id === userId ? (
+                              <span
+                                className={`d-block ${styles.sentTransfer}`}
+                              >
+                                -{element.transaction_amount.toLocaleString()}
+                              </span>
+                            ) : (
+                              <span
+                                className={`d-block ${styles.sentTransfer}`}
+                              >
+                                +{element.transaction_amount.toLocaleString()}
+                              </span>
+                            )}
+                          </Col>
                         </Row>
-                      </Col>
-                      <Col
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className="d-flex align-items-center"
-                      >
-                        <span>See all</span>
-                      </Col>
-                    </Row>
-                    <Row className={`mb-4`}>
-                      <Col lg={3} md={3} sm={3} xs={3}>
-                        <div className="d-flex align-items-center">
-                          <Image
-                            src={samuelSuhi}
-                            alt=""
-                            className="img-fluid"
-                          ></Image>
-                        </div>
-                      </Col>
-                      <Col lg={5} md={5} sm={5} xs={5}>
-                        <Row>
-                          <span className="d-block fw-bold">Samuel Suhi</span>
-                          <span className="d-block">Transfer</span>
-                        </Row>
-                      </Col>
-                      <Col
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className="d-flex align-items-center"
-                      >
-                        <span>See all</span>
-                      </Col>
-                    </Row>
-                    <Row className={`mb-4`}>
-                      <Col lg={3} md={3} sm={3} xs={3}>
-                        <div className="d-flex align-items-center">
-                          <Image
-                            src={samuelSuhi}
-                            alt=""
-                            className="img-fluid"
-                          ></Image>
-                        </div>
-                      </Col>
-                      <Col lg={5} md={5} sm={5} xs={5}>
-                        <Row>
-                          <span className="d-block fw-bold">Samuel Suhi</span>
-                          <span className="d-block">Transfer</span>
-                        </Row>
-                      </Col>
-                      <Col
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className="d-flex align-items-center"
-                      >
-                        <span>See all</span>
-                      </Col>
-                    </Row>
-                    <Row className={`mb-4`}>
-                      <Col lg={3} md={3} sm={3} xs={3}>
-                        <div className="d-flex align-items-center">
-                          <Image
-                            src={samuelSuhi}
-                            alt=""
-                            className="img-fluid"
-                          ></Image>
-                        </div>
-                      </Col>
-                      <Col lg={5} md={5} sm={5} xs={5}>
-                        <Row>
-                          <span className="d-block fw-bold">Samuel Suhi</span>
-                          <span className="d-block">Transfer</span>
-                        </Row>
-                      </Col>
-                      <Col
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className="d-flex align-items-center"
-                      >
-                        <span>See all</span>
-                      </Col>
-                    </Row>
+                      );
+                    })}
                   </Col>
                 </Row>
               </Col>
