@@ -4,7 +4,7 @@ export function unauthPage(context) {
   return new Promise((resolve) => {
     const allCookies = cookies(context);
     if (allCookies.token) {
-      return context.res.writeHead(302, { Location: "/" }).end();
+      return context.res.writeHead(302, { Location: "/dashboard" }).end();
     }
     return resolve("unauthorized");
   });

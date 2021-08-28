@@ -3,6 +3,10 @@
   background-color: #e5e5e5;
 }
 
+.entireRow {
+  min-height: 600px;
+}
+
 .mainRowMargin {
   margin-left: 100px;
   margin-right: 100px;

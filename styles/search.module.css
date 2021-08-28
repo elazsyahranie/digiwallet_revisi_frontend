@@ -11,6 +11,7 @@
 .whiteBackground {
   background-color: #fff;
   border-radius: 25px;
+  min-height: 600px;
 }
 
 .leftColwhiteBackground {
@@ -84,6 +85,22 @@
   box-shadow: 0px 4px 20px 0px #0000000d;
   cursor: pointer;
 }
+
+/* LOG OUT BUTTON */
+.logOutButton,
+.logOutButton:hover {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+/* LOG OUT BUTTON */
 
 /* @media (max-width: 822px) {
   .menuExplaination {

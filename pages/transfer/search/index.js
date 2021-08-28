@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import styles from "/styles/search.module.css";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import Cookies from "js-cookie";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
@@ -15,6 +16,7 @@ import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
 import noProfilePicture from "/public/img-not-found.png";
+import logOutIcon from "/public/log-out.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -70,17 +72,25 @@ function Transfer(props) {
     router.push("/search");
   };
 
+  const logOut = (event) => {
+    event.preventDefault();
+    Cookies.remove("user_id");
+    Cookies.remove("user_email");
+    Cookies.remove("token");
+    router.push("/login");
+  };
+
   return (
     <>
       <Layout title="Digiwallet | Search">
         <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
-            <Row>
+            <Row className={styles.entireRow}>
               {/* LEFT MENU */}
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
-                  <div className={`py-5`}>
+                  <div className={`py-5 position-relative h-100`}>
                     <Button
                       className={styles.leftMenuButton}
                       onClick={() => goToDashboard()}
@@ -127,6 +137,19 @@ function Transfer(props) {
                         Profile
                       </span>
                     </Button>
+                    <Button
+                      className={styles.logOutButton}
+                      onClick={(event) => logOut(event)}
+                    >
+                      <Image
+                        src={logOutIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Log Out
+                      </span>
+                    </Button>
                   </div>
                 </div>
               </Col>
@@ -158,6 +181,7 @@ function Transfer(props) {
                         <div
                           className={`p-2 d-flex ${styles.userSearchResultBox}`}
                           onClick={() => goToInputPage(item.user_id)}
+                          key={index}
                         >
                           <div className={`pe-4`}>
                             <Image
