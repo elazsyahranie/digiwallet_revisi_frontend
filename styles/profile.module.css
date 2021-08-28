@@ -1,0 +1,165 @@
+/* FOR YOUR HOME PAGE */
+.greyBackground {
+  background-color: #e5e5e5;
+}
+
+.mainRowMargin {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.whiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+  min-height: 600px;
+}
+
+.leftColwhiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+  min-height: 100%;
+}
+
+.blueBackground {
+  background-color: #6379f4;
+  border-radius: 20px;
+}
+
+.whiteText {
+  color: white;
+}
+
+/* .leftMenu {
+  min-height: 42px;
+} */
+
+.leftMenuIcon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.leftMenuButton,
+.leftMenuButton:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuButtonSelected,
+.leftMenuButtonSelected:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border-left: 5px solid #0070f3;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuExplaination {
+  margin-left: 30px;
+}
+
+@media (max-width: 991.98px) {
+  .leftMenuExplaination {
+    margin-left: 15px;
+  }
+}
+
+.noProfilePictureAvailable {
+  border-radius: 10px;
+}
+
+.userSearchResultBox {
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px 0px #0000000d;
+  cursor: pointer;
+}
+
+/* LOG OUT BUTTON */
+.logOutButton,
+.logOutButton:hover {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+/* LOG OUT BUTTON */
+
+/* @media (max-width: 822px) {
+  .menuExplaination {
+    display: none;
+  }
+
+  .leftMenuButton,
+  .leftMenuButton:hover {
+    display: block;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    color: black;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    display: flex;
+  }
+
+  .leftMenuButtonSelected,
+  .leftMenuButtonSelected:hover {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    color: black;
+    align-items: center;
+    background-color: transparent;
+    border-left: 5px solid #0070f3;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-radius: 0px;
+    display: flex;
+  }
+} */
+
+.rightMenuButtonUp {
+  display: block;
+  width: 100%;
+}
+
+/* 
+.rightMenuButtonUp {
+  position: relative;
+  right: 0;
+  left: 100;
+  margin: right;
+  display: block;
+} */
+
+.profilePictureContainer {
+  border-radius: 10px;
+}
+
+.profileMenu {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  background-color: #e5e8ed;
+}
+/* FOR YOUR HOME PAGE */

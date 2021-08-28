@@ -1,0 +1,196 @@
+import Image from "next/image";
+import React, { useState } from "react";
+import styles from "/styles/profile.module.css";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import Cookies from "js-cookie";
+import Layout from "/components/Layout";
+import NavBar from "/components/module/NavBar";
+import Footer from "/components/module/Footer";
+import { authPage } from "middleware/authorizationPage";
+import router from "next/router";
+import axiosApiIntances from "/utils/axios";
+import { connect } from "react-redux";
+import { getUserbyId, getUserbyKeyword } from "/redux/actions/user";
+import dashboardIcon from "/public/grid_grey.png";
+import transferIcon from "/public/arrow-up.png";
+import topUpIcon from "/public/plus.png";
+import profileIcon from "/public/group40.png";
+import noProfilePicture from "/public/img-not-found.png";
+import logOutIcon from "/public/log-out.png";
+
+export async function getServerSideProps(context) {
+  const data = await authPage(context);
+  const userIdParsed = parseInt(data.userId);
+  const userData = await axiosApiIntances
+    .get(`user/${userIdParsed}`)
+    .then((res) => {
+      const allResult = {
+        userResult: res.data.data.result,
+        balanceResult: res.data.data.resultBalance,
+        transactionResult: res.data.data.resultTransactionHistory,
+      };
+      return allResult;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return { props: { userData: userData } };
+}
+
+function Profile(props) {
+  const [searchForm, setSearchForm] = useState({ keyword: "" });
+  const [searchResult, setSearchResult] = useState([]);
+
+  const handleSearchBar = (event) => {
+    event.preventDefault();
+    setSearchForm({ ...searchForm, [event.target.name]: event.target.value });
+  };
+
+  const sendKeyword = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      props
+        .getUserbyKeyword(searchForm.keyword)
+        .then((res) => {
+          setSearchResult(res.value.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const goToInputPage = (user_id) => {
+    router.push(`/transfer/input/${user_id}`);
+  };
+
+  const goToDashboard = () => {
+    router.push("/dashboard");
+  };
+
+  const goToTransfer = () => {
+    router.push("/search");
+  };
+
+  const logOut = (event) => {
+    event.preventDefault();
+    Cookies.remove("user_id");
+    Cookies.remove("user_email");
+    Cookies.remove("token");
+    router.push("/login");
+  };
+
+  return (
+    <>
+      <Layout title="Digiwallet | Profile">
+        <NavBar data={props.userData} />
+        <div className={styles.greyBackground}>
+          <Container fluid="sm" className="py-4">
+            <Row className={styles.entireRow}>
+              {/* LEFT MENU */}
+              <Col lg={3} md={4} className="d-none d-md-block">
+                <div className={`${styles.whiteBackground} h-100`}>
+                  <div className={`py-5 position-relative h-100`}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToDashboard()}
+                    >
+                      <Image
+                        src={dashboardIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Dashboard
+                      </span>
+                    </Button>
+                    <Button
+                      className={styles.leftMenuButtonSelected}
+                      onClick={() => goToTransfer()}
+                    >
+                      <Image
+                        src={transferIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Transfer
+                      </span>
+                    </Button>
+                    <Button className={styles.leftMenuButton}>
+                      <Image
+                        src={topUpIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Top Up
+                      </span>
+                    </Button>
+                    <Button className={styles.leftMenuButton}>
+                      <Image
+                        src={profileIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Profile
+                      </span>
+                    </Button>
+                    <Button
+                      className={styles.logOutButton}
+                      onClick={(event) => logOut(event)}
+                    >
+                      <Image
+                        src={logOutIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Log Out
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              </Col>
+              {/* RIGHT MENU */}
+              <Col
+                lg={8}
+                md={7}
+                sm={12}
+                xs={12}
+                className={`p-4 ${styles.whiteBackground}`}
+              >
+                <div className="d-flex justify-content-center mt-4 mb-4">
+                  <Image
+                    src={noProfilePicture}
+                    width="70"
+                    height="70"
+                    className={`img-fluid ${styles.profilePictureContainer}`}
+                  ></Image>
+                </div>
+                <div className="d-flex justify-content-center mb-1">
+                  <h5 className="fw-bold">Robert Chandler</h5>
+                </div>
+                <div className="d-flex justify-content-center mb-5">
+                  <span>+62 813-9387-7946</span>
+                </div>
+                <div className={styles.profileMenu}>Test!</div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <Footer />
+      </Layout>
+    </>
+  );
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  user: state.user,
+});
+
+const mapDispatchtoProps = { getUserbyId, getUserbyKeyword };
+
+export default connect(mapStateToProps, mapDispatchtoProps)(Profile);

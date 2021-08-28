@@ -39,8 +39,10 @@ function NavBar(props) {
                 <Image
                   src={TempImgProfile}
                   alt=""
+                  height={52}
+                  width={52}
                   className={`img-fluid my-auto`}
-                ></Image>
+                />
               </Nav.Item>
               <Nav.Item>
                 <div className={style.namePhoneNumber}>

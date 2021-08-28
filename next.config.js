@@ -23,6 +23,10 @@ module.exports = {
         destination: "/dashboard", // lokasi path
       },
       {
+        source: "/profile", // pengganti path pada react js
+        destination: "/profile", // lokasi path
+      },
+      {
         source: "/search", // pengganti path pada react js
         destination: "/transfer/search", // lokasi path
       },
