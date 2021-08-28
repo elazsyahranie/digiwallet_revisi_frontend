@@ -9,6 +9,7 @@ import {
   Form,
   Alert,
 } from "react-bootstrap";
+import Cookies from "js-cookie";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
 import Footer from "/components/module/Footer";
@@ -113,6 +114,14 @@ function Dashboard(props) {
     router.push("/search");
   };
 
+  const logOut = (event) => {
+    event.preventDefault();
+    Cookies.remove("user_id");
+    Cookies.remove("user_email");
+    Cookies.remove("token");
+    router.push("/login");
+  };
+
   return (
     <>
       <Modal show={topUpModal} onHide={closeTopUpModal}>
@@ -183,10 +192,7 @@ function Dashboard(props) {
                         alt=""
                         className={`img-fluid ${styles.leftMenuButtonIcon}`}
                       ></Image>
-                      <span
-                        className={`${styles.leftMenuExplaination}`}
-                        onClick={() => goToTransfer()}
-                      >
+                      <span className={`${styles.leftMenuExplaination}`}>
                         Transfer
                       </span>
                     </Button>
@@ -210,7 +216,10 @@ function Dashboard(props) {
                         Profile
                       </span>
                     </Button>
-                    <Button className={styles.logOutButton}>
+                    <Button
+                      className={styles.logOutButton}
+                      onClick={(event) => logOut(event)}
+                    >
                       <Image
                         src={logOutIcon}
                         alt=""
@@ -314,7 +323,6 @@ function Dashboard(props) {
                       </Col>
                     </Row>
                     {props.transactionHistory.map((element, index) => {
-                      console.log(element);
                       return (
                         <Row className={`mb-4`} key={index}>
                           <Col
@@ -365,7 +373,7 @@ function Dashboard(props) {
                               </span>
                             ) : (
                               <span
-                                className={`d-block ${styles.sentTransfer}`}
+                                className={`d-block ${styles.receivedTransfer}`}
                               >
                                 +{element.transaction_amount.toLocaleString()}
                               </span>
