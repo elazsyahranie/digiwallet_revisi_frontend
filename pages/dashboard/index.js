@@ -114,6 +114,10 @@ function Dashboard(props) {
     router.push("/search");
   };
 
+  const goToProfile = () => {
+    router.push("/profile");
+  };
+
   const logOut = (event) => {
     event.preventDefault();
     Cookies.remove("user_id");
@@ -206,7 +210,10 @@ function Dashboard(props) {
                         Top Up
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToProfile()}
+                    >
                       <Image
                         src={profileIcon}
                         alt=""

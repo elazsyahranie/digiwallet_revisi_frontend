@@ -17,6 +17,7 @@ import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
 import noProfilePicture from "/public/img-not-found.png";
 import logOutIcon from "/public/log-out.png";
+import arrowLeft from "/public/arrow-left.png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -72,12 +73,31 @@ function Profile(props) {
     router.push("/search");
   };
 
+  const goToProfile = () => {
+    router.push("/profile");
+  };
+
   const logOut = (event) => {
     event.preventDefault();
     Cookies.remove("user_id");
     Cookies.remove("user_email");
     Cookies.remove("token");
     router.push("/login");
+  };
+
+  const personalInformation = (event) => {
+    event.preventDefault();
+    console.log("Personal Information!");
+  };
+
+  const changePassword = (event) => {
+    event.preventDefault();
+    console.log("Change password!");
+  };
+
+  const changePIN = (event) => {
+    event.preventDefault();
+    console.log("Change PIN!");
   };
 
   return (
@@ -105,7 +125,7 @@ function Profile(props) {
                       </span>
                     </Button>
                     <Button
-                      className={styles.leftMenuButtonSelected}
+                      className={styles.leftMenuButton}
                       onClick={() => goToTransfer()}
                     >
                       <Image
@@ -127,7 +147,10 @@ function Profile(props) {
                         Top Up
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButtonSelected}
+                      onClick={() => goToProfile()}
+                    >
                       <Image
                         src={profileIcon}
                         alt=""
@@ -175,7 +198,45 @@ function Profile(props) {
                 <div className="d-flex justify-content-center mb-5">
                   <span>+62 813-9387-7946</span>
                 </div>
-                <div className={styles.profileMenu}>Test!</div>
+                <div
+                  className={`${styles.profileMenu}`}
+                  onClick={(event) => personalInformation(event)}
+                >
+                  <div className={styles.profileMenuContent}>
+                    <span className={styles.profileMenuName}>
+                      Personal Infomartion
+                    </span>
+                    <Image src={arrowLeft} className="img-fluid" />
+                  </div>
+                </div>
+                <div
+                  className={`${styles.profileMenu}`}
+                  onClick={(event) => changePassword(event)}
+                >
+                  <div className={styles.profileMenuContent}>
+                    <span className={styles.profileMenuName}>
+                      Change Password
+                    </span>
+                    <Image src={arrowLeft} className="img-fluid" />
+                  </div>
+                </div>
+                <div
+                  className={`${styles.profileMenu}`}
+                  onClick={(event) => changePIN(event)}
+                >
+                  <div className={styles.profileMenuContent}>
+                    <span className={styles.profileMenuName}>Change PIN</span>
+                    <Image src={arrowLeft} className="img-fluid" />
+                  </div>
+                </div>
+                <div
+                  className={`${styles.profileMenu}`}
+                  onClick={(event) => logOut(event)}
+                >
+                  <div className={styles.profileMenuContentLogOut}>
+                    <span className={styles.profileMenuName}>Log Out</span>
+                  </div>
+                </div>
               </Col>
             </Row>
           </Container>
