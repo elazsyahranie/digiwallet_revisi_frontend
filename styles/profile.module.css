@@ -101,6 +101,15 @@
 }
 /* LOG OUT BUTTON */
 
+/* EDIT FORM */
+.editFormItem {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+}
+/* EDIT FORM */
+
 .rightMenuButtonUp {
   display: block;
   width: 100%;

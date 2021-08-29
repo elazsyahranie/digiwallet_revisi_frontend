@@ -40,9 +40,6 @@ export async function getServerSideProps(context) {
 }
 
 function personalInfo(props) {
-  const [searchForm, setSearchForm] = useState({ keyword: "" });
-  const [searchResult, setSearchResult] = useState([]);
-
   const goToDashboard = () => {
     router.push("/dashboard");
   };

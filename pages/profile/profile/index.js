@@ -38,7 +38,30 @@ export async function getServerSideProps(context) {
 }
 
 function Profile(props) {
-  console.log(props.userData.userResult[0]);
+  const [showForm, setShowForm] = useState(false);
+  const [userProfileData, setUserProfileData] = useState({
+    userEmail: props.userData.userResult[0].user_email,
+    userPhone: props.userData.userResult[0].user_phone,
+    userName: props.userData.userResult[0].user_name,
+  });
+
+  const handleUpdateProfile = (event) => {
+    event.preventDefault();
+    setUserProfileData({
+      ...userProfileData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const submitUpdateProfile = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      console.log(userProfileData);
+    }
+  };
+
+  // console.log(props.userData.userResult[0]);
+  // console.log(userProfileData);
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -73,7 +96,7 @@ function Profile(props) {
     console.log("Change PIN!");
   };
 
-  const { user_name } = props.userData.userResult[0];
+  const { user_name, user_phone } = props.userData.userResult[0];
 
   return (
     <>
@@ -175,19 +198,37 @@ function Profile(props) {
                     <span>Edit</span>
                   </div>
                 </div>
-                <div className="d-flex justify-content-center mb-1">
+                <Form className={styles.editForm}>
+                  <Form.Control
+                    type="text"
+                    name="userName"
+                    placeholder={userProfileData.userName}
+                    className={`${styles.editFormItem} mb-3`}
+                    onChange={(event) => handleUpdateProfile(event)}
+                    onKeyDown={(event) => submitUpdateProfile(event)}
+                  />
+                  <Form.Control
+                    type="text"
+                    name="userPhone"
+                    placeholder={userProfileData.userPhone}
+                    className={`${styles.editFormItem} mb-5`}
+                    onChange={(event) => handleUpdateProfile(event)}
+                    onKeyDown={(event) => submitUpdateProfile(event)}
+                  />
+                </Form>
+                {/* <div className="d-flex justify-content-center mb-1">
                   <h5 className="fw-bold text-center">{user_name}</h5>
                 </div>
                 <div className="d-flex justify-content-center mb-5">
-                  <span className="text-center">+62 813-9387-7946</span>
-                </div>
+                  <span className="text-center">{user_phone}</span>
+                </div> */}
                 <div
                   className={`${styles.profileMenu}`}
                   onClick={() => personalInformation()}
                 >
                   <div className={styles.profileMenuContent}>
                     <span className={styles.profileMenuName}>
-                      Personal Infomartion
+                      Personal Information
                     </span>
                     <Image src={arrowLeft} className="img-fluid" />
                   </div>
