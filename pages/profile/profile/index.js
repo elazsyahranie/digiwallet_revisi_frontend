@@ -18,6 +18,7 @@ import profileIcon from "/public/group40.png";
 import noProfilePicture from "/public/img-not-found.png";
 import logOutIcon from "/public/log-out.png";
 import arrowLeft from "/public/arrow-left.png";
+import pencil from "/public/Vector (2).png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -39,32 +40,6 @@ export async function getServerSideProps(context) {
 }
 
 function Profile(props) {
-  const [searchForm, setSearchForm] = useState({ keyword: "" });
-  const [searchResult, setSearchResult] = useState([]);
-
-  const handleSearchBar = (event) => {
-    event.preventDefault();
-    setSearchForm({ ...searchForm, [event.target.name]: event.target.value });
-  };
-
-  const sendKeyword = (event) => {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      props
-        .getUserbyKeyword(searchForm.keyword)
-        .then((res) => {
-          setSearchResult(res.value.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-  const goToInputPage = (user_id) => {
-    router.push(`/transfer/input/${user_id}`);
-  };
-
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -85,9 +60,8 @@ function Profile(props) {
     router.push("/login");
   };
 
-  const personalInformation = (event) => {
-    event.preventDefault();
-    console.log("Personal Information!");
+  const personalInformation = () => {
+    router.push("/personal-info");
   };
 
   const changePassword = (event) => {
@@ -184,7 +158,7 @@ function Profile(props) {
                 xs={12}
                 className={`p-4 ${styles.whiteBackground}`}
               >
-                <div className="d-flex justify-content-center mt-4 mb-4">
+                <div className="d-flex justify-content-center mt-4 mb-2">
                   <Image
                     src={noProfilePicture}
                     width="70"
@@ -192,15 +166,23 @@ function Profile(props) {
                     className={`img-fluid ${styles.profilePictureContainer}`}
                   ></Image>
                 </div>
+                <div className="d-flex justify-content-center mb-3">
+                  <div className={styles.editMenuContainer}>
+                    <div>
+                      <Image src={pencil} />
+                    </div>
+                    <span>Edit</span>
+                  </div>
+                </div>
                 <div className="d-flex justify-content-center mb-1">
-                  <h5 className="fw-bold">Robert Chandler</h5>
+                  <h5 className="fw-bold text-center">Robert Chandler</h5>
                 </div>
                 <div className="d-flex justify-content-center mb-5">
-                  <span>+62 813-9387-7946</span>
+                  <span className="text-center">+62 813-9387-7946</span>
                 </div>
                 <div
                   className={`${styles.profileMenu}`}
-                  onClick={(event) => personalInformation(event)}
+                  onClick={() => personalInformation()}
                 >
                   <div className={styles.profileMenuContent}>
                     <span className={styles.profileMenuName}>

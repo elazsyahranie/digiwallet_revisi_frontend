@@ -75,6 +75,10 @@
   }
 }
 
+.personalInformationDesc {
+  max-width: 340px;
+}
+
 .noProfilePictureAvailable {
   border-radius: 10px;
 }

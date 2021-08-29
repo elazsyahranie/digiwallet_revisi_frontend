@@ -24,7 +24,11 @@ module.exports = {
       },
       {
         source: "/profile", // pengganti path pada react js
-        destination: "/profile", // lokasi path
+        destination: "/profile/profile", // lokasi path
+      },
+      {
+        source: "/personal-info", // pengganti path pada react js
+        destination: "/profile/personalInfo", // lokasi path
       },
       {
         source: "/search", // pengganti path pada react js
