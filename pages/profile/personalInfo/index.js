@@ -162,12 +162,45 @@ function personalInfo(props) {
                 className={`p-4 ${styles.whiteBackground}`}
               >
                 <div className="p-2">
-                  <h6>Personal Information</h6>
-                  <p className={styles.personalInformationDesc}>
-                    We got your personal information from the sign up proccess.
-                    If you want to make changes on your information, contact our
-                    support.
-                  </p>
+                  <div className="mb-2">
+                    <h6>Personal Information</h6>
+                    <p className={styles.personalInformationDesc}>
+                      We got your personal information from the sign up
+                      proccess. If you want to make changes on your information,
+                      contact our support.
+                    </p>
+                  </div>
+                  <div className={`${styles.profileData} mb-2`}>
+                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
+                      <h6 className="fw-normal">First Name</h6>
+                      <h5>Robert</h5>
+                    </div>
+                  </div>
+                  <div className={`${styles.profileData} mb-2`}>
+                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
+                      <h6 className="fw-normal">Last Name</h6>
+                      <h5>Chandler</h5>
+                    </div>
+                  </div>
+                  <div className={`${styles.profileData} mb-2`}>
+                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
+                      <h6 className="fw-normal">Verified Email</h6>
+                      <h5>pewdiepie1@gmail.com</h5>
+                    </div>
+                  </div>
+                  <div className={`${styles.profileData} mb-2`}>
+                    <div
+                      className={`pt-3 pb-3 ${styles.profileDataContentPhoneNumber}`}
+                    >
+                      <div>
+                        <h6 className="fw-normal">Phone Number</h6>
+                        <h5>+62 187986960689</h5>
+                      </div>
+                      <div>
+                        <span>Manage</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Col>
             </Row>

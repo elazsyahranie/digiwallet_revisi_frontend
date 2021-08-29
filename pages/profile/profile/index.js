@@ -28,8 +28,6 @@ export async function getServerSideProps(context) {
     .then((res) => {
       const allResult = {
         userResult: res.data.data.result,
-        balanceResult: res.data.data.resultBalance,
-        transactionResult: res.data.data.resultTransactionHistory,
       };
       return allResult;
     })
@@ -40,6 +38,7 @@ export async function getServerSideProps(context) {
 }
 
 function Profile(props) {
+  console.log(props.userData.userResult[0]);
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -73,6 +72,8 @@ function Profile(props) {
     event.preventDefault();
     console.log("Change PIN!");
   };
+
+  const { user_name } = props.userData.userResult[0];
 
   return (
     <>
@@ -175,7 +176,7 @@ function Profile(props) {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center mb-1">
-                  <h5 className="fw-bold text-center">Robert Chandler</h5>
+                  <h5 className="fw-bold text-center">{user_name}</h5>
                 </div>
                 <div className="d-flex justify-content-center mb-5">
                   <span className="text-center">+62 813-9387-7946</span>
