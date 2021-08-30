@@ -17,6 +17,7 @@ import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
 import noProfilePicture from "/public/img-not-found.png";
 import logOutIcon from "/public/log-out.png";
+import ReactPaginate from "react-paginate";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
