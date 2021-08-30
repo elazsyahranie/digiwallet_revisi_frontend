@@ -160,48 +160,65 @@ function Transfer(props) {
                 md={7}
                 sm={12}
                 xs={12}
-                className={`p-4 ${styles.whiteBackground}`}
+                className={`${styles.whiteBackground}`}
               >
-                <h5 className="pb-1">Search receiver</h5>
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicSearch">
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter receiver"
-                      name="keyword"
-                      onChange={(event) => handleSearchBar(event)}
-                      onKeyDown={(event) => sendKeyword(event)}
-                      required
-                    />
-                  </Form.Group>
-                </Form>
-                {searchResult.length < 0
-                  ? null
-                  : searchResult.map((item, index) => {
-                      return (
-                        <div
-                          className={`p-2 d-flex ${styles.userSearchResultBox}`}
-                          onClick={() => goToInputPage(item.user_id)}
-                          key={index}
-                        >
-                          <div className={`pe-4`}>
-                            <Image
-                              src={noProfilePicture}
-                              width={50}
-                              height={50}
-                              alt=""
-                              className={`img-fluid ${styles.noProfilePictureAvailable}`}
-                            />
+                <div className={`p-4`}>
+                  <h5 className="pb-1">Search receiver</h5>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formBasicSearch">
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter receiver"
+                        name="keyword"
+                        onChange={(event) => handleSearchBar(event)}
+                        onKeyDown={(event) => sendKeyword(event)}
+                        required
+                      />
+                    </Form.Group>
+                  </Form>
+                  {searchResult.length < 0
+                    ? null
+                    : searchResult.map((item, index) => {
+                        return (
+                          <div
+                            className={`p-2 d-flex ${styles.userSearchResultBox}`}
+                            onClick={() => goToInputPage(item.user_id)}
+                            key={index}
+                          >
+                            <div className={`pe-4`}>
+                              <Image
+                                src={noProfilePicture}
+                                width={50}
+                                height={50}
+                                alt=""
+                                className={`img-fluid ${styles.noProfilePictureAvailable}`}
+                              />
+                            </div>
+                            <Row>
+                              <span className="fw-bold">{item.user_name}</span>
+                              <span className="fst-italic">
+                                Phone Number Unavailable
+                              </span>
+                            </Row>
                           </div>
-                          <Row>
-                            <span className="fw-bold">{item.user_name}</span>
-                            <span className="fst-italic">
-                              Phone Number Unavailable
-                            </span>
-                          </Row>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  <div className={styles.myPaginationContainer}>
+                    <ReactPaginate
+                      previousLabel={"<<"}
+                      nextLabel={">>"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={1}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={1}
+                      containerClassName={styles.pagination}
+                      subContainerClassName={`${styles.pages} ${styles.pagination}`}
+                      activeClassName={styles.active}
+                    />
+                  </div>
+                </div>
               </Col>
             </Row>
           </Container>
