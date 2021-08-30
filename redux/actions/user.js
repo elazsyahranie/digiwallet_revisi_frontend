@@ -14,6 +14,13 @@ export const getUserbyKeyword = (keyword) => {
   };
 };
 
+export const updateUser = (id, setData) => {
+  return {
+    type: "UPDATE_USER",
+    payload: axiosApiIntances.patch(`/user/${id}`, setData),
+  };
+};
+
 export const insertPin = (id, userPin) => {
   return {
     type: "INSERT_PIN",

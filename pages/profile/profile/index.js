@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "/styles/profile.module.css";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap";
 import Cookies from "js-cookie";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
@@ -10,7 +10,7 @@ import { authPage } from "middleware/authorizationPage";
 import router from "next/router";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
-import { getUserbyId, getUserbyKeyword } from "/redux/actions/user";
+import { getUserbyId, getUserbyKeyword, updateUser } from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
@@ -39,6 +39,7 @@ export async function getServerSideProps(context) {
 
 function Profile(props) {
   const [showForm, setShowForm] = useState(false);
+  const [updateSuccessAlert, setUpdateSuccessAlert] = useState(false);
   const [userProfileData, setUserProfileData] = useState({
     userEmail: props.userData.userResult[0].user_email,
     userPhone: props.userData.userResult[0].user_phone,
@@ -64,7 +65,18 @@ function Profile(props) {
   const submitUpdateProfile = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
-      console.log(userProfileData);
+      props
+        .updateUser(props.userData.userResult[0].user_id, userProfileData)
+        .then((res) => {
+          console.log(res);
+          setUpdateSuccessAlert(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -227,7 +239,7 @@ function Profile(props) {
                       type="text"
                       name="userPhone"
                       placeholder={userProfileData.userPhone}
-                      className={`${styles.editFormItem} mb-5`}
+                      className={`${styles.editFormItem} mb-3`}
                       onChange={(event) => handleUpdateProfile(event)}
                       onKeyDown={(event) => submitUpdateProfile(event)}
                     />
@@ -237,10 +249,22 @@ function Profile(props) {
                     <div className="d-flex justify-content-center mb-1">
                       <h5 className="fw-bold text-center">{user_name}</h5>
                     </div>
-                    <div className="d-flex justify-content-center mb-5">
+                    <div className="d-flex justify-content-center mb-4">
                       <span className="text-center">{user_phone}</span>
                     </div>
                   </>
+                )}
+                {updateSuccessAlert && (
+                  <div className="d-flex justify-content-center">
+                    <Alert
+                      className={`mb-4 ${styles.updateSuccessAlert}`}
+                      variant="success"
+                    >
+                      <span className="d-block text-center">
+                        User succesfully updated
+                      </span>
+                    </Alert>
+                  </div>
                 )}
                 <div
                   className={`${styles.profileMenu}`}
@@ -296,6 +320,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchtoProps = { getUserbyId, getUserbyKeyword };
+const mapDispatchtoProps = { getUserbyId, getUserbyKeyword, updateUser };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Profile);
