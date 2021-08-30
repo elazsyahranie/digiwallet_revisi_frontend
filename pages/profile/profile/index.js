@@ -10,7 +10,12 @@ import { authPage } from "middleware/authorizationPage";
 import router from "next/router";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
-import { getUserbyId, getUserbyKeyword, updateUser } from "/redux/actions/user";
+import {
+  getUserbyId,
+  getUserbyKeyword,
+  updateUser,
+  updateUserImage,
+} from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
@@ -45,6 +50,7 @@ function Profile(props) {
     userPhone: props.userData.userResult[0].user_phone,
     userName: props.userData.userResult[0].user_name,
   });
+  const [image, setImage] = useState(null);
 
   const showUpdateProfile = () => {
     setShowForm(true);
@@ -52,6 +58,25 @@ function Profile(props) {
 
   const hideUpdateProfile = () => {
     setShowForm(false);
+  };
+
+  const handleImage = (event) => {
+    setImage(event.target.files[0]);
+    updateImage();
+  };
+
+  const updateImage = () => {
+    console.log(image);
+    // const formData = new FormData();
+    // formData.append("image", image);
+    // props
+    //   .updateUserImage(props.userData.userResult[0].user_id, formData)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const handleUpdateProfile = (event) => {
@@ -80,6 +105,7 @@ function Profile(props) {
     }
   };
 
+  // console.log(image);
   // console.log(props.userData.userResult[0]);
   // console.log(userProfileData);
   const goToDashboard = () => {
@@ -203,12 +229,28 @@ function Profile(props) {
                 className={`p-4 ${styles.whiteBackground}`}
               >
                 <div className="d-flex justify-content-center mt-4 mb-2">
-                  <Image
-                    src={noProfilePicture}
-                    width="70"
-                    height="70"
-                    className={`img-fluid ${styles.profilePictureContainer}`}
-                  ></Image>
+                  <div className="position-relative">
+                    <Form.Group className={styles.formGroupUploadImage}>
+                      <Image
+                        src={noProfilePicture}
+                        width="70"
+                        height="70"
+                        className={styles.imgProfile}
+                      />
+                      <Form.Label
+                        htmlFor="formFile"
+                        className={styles.boxUpdateImage}
+                      >
+                        Jangan di hapus !
+                      </Form.Label>
+                      <Form.Control
+                        type="file"
+                        id="formFile"
+                        onChange={(event) => handleImage(event)}
+                        className={styles.updateImage}
+                      />
+                    </Form.Group>
+                  </div>
                 </div>
                 <div className="d-flex justify-content-center mb-3">
                   <div
@@ -320,6 +362,11 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchtoProps = { getUserbyId, getUserbyKeyword, updateUser };
+const mapDispatchtoProps = {
+  getUserbyId,
+  getUserbyKeyword,
+  updateUser,
+  updateUserImage,
+};
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Profile);

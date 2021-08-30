@@ -110,6 +110,39 @@
 }
 /* EDIT FORM */
 
+/* UPLOAD PICTURE FORM */
+.boxUpdateImage {
+  background-color: transparent;
+  color: transparent;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  visibility: visible;
+  margin: auto;
+  cursor: pointer;
+}
+
+.imgProfile {
+  border-radius: 10px;
+}
+
+.updateImage {
+  background-color: rgba(46, 31, 182, 0.6);
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  visibility: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+}
+/* UPLOAD PICTURE FORM */
+
 .rightMenuButtonUp {
   display: block;
   width: 100%;

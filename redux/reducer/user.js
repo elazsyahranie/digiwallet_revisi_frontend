@@ -73,6 +73,28 @@ const user = (state = initialState, action) => {
         data: [],
         msg: action.payload.response.data.msg,
       };
+    case "UPDATE_USER_IMAGE_PENDING":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case "UPDATE_USER_IMAGE_FULFILLED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "UPDATE_USER_REJECTED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
     case "INSERT_PIN_PENDING":
       return {
         ...state,

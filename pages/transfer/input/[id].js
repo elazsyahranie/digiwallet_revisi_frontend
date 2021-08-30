@@ -68,10 +68,12 @@ function Input(props) {
   // TRANSACION SUCCESS HANDLER
   const [transactionSuccess, setTransactionSuccess] = useState(false);
 
+  // SENDER PIN HANDLER
+  const [userPin, setUserPin] = useState("");
+
   // TRANSACTION
   const [transaction, setTransaction] = useState({
     senderId: props.userData.userResult[0].user_id,
-    senderPin: "",
     receiverId: props.userReceiver.userResult[0].user_id,
     transactionValue: "",
     transactionNotes: "",
@@ -95,10 +97,49 @@ function Input(props) {
     setTransaction({ ...transaction, [event.target.name]: event.target.value });
   };
 
+  const handlePin = (event) => {
+    event.preventDefault();
+    if (event.target.value) {
+      const nextSibling = document.getElementById(
+        `pin-${parseInt(event.target.name, 10) + 1}`
+      );
+
+      if (nextSibling !== null) {
+        nextSibling.focus();
+      }
+    }
+    setUserPin({
+      ...userPin,
+      [`pin${event.target.name}`]: event.target.value,
+    });
+  };
+
   const submitTransfer = (event) => {
     event.preventDefault();
+    const senderPin =
+      userPin.pin1 +
+      userPin.pin2 +
+      userPin.pin3 +
+      userPin.pin4 +
+      userPin.pin5 +
+      userPin.pin6;
+    // const [transaction, setTransaction] = useState({
+    //   senderId: props.userData.userResult[0].user_id,
+    //   receiverId: props.userReceiver.userResult[0].user_id,
+    //   transactionValue: "",
+    //   transactionNotes: "",
+    // });
+    const { senderId, receiverId, transactionValue, transactionNotes } =
+      transaction;
+    const transactionData = {
+      senderId,
+      senderPin,
+      receiverId,
+      transactionValue,
+      transactionNotes,
+    };
     props
-      .makeTransaction({ ...transaction })
+      .makeTransaction({ ...transactionData })
       .then((res) => {
         console.log(res);
         setTransactionSuccess(true);
@@ -131,13 +172,63 @@ function Input(props) {
               Enter your 6 digits PIN for confirmation to continue transferring
               money.
             </p>
-            <Form>
-              <Form.Control
-                name="senderPin"
+            <div
+              className={`mb-3`}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <input
                 type="password"
-                onChange={(event) => handleTransfer(event)}
+                id="pin-1"
+                name="1"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
               />
-            </Form>
+              <input
+                type="password"
+                id="pin-2"
+                name="2"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
+              />
+              <input
+                type="password"
+                id="pin-3"
+                name="3"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
+              />
+              <input
+                type="password"
+                id="pin-4"
+                name="4"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
+              />
+              <input
+                type="password"
+                id="pin-5"
+                name="5"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
+              />
+              <input
+                type="password"
+                id="pin-6"
+                name="6"
+                onChange={(event) => handlePin(event)}
+                maxLength="1"
+                style={{ width: "10%" }}
+              />
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeTransactionModal}>
