@@ -18,6 +18,8 @@ export async function getServerSideProps(context) {
 
 function Signup(props) {
   const router = useRouter();
+  const [inputEmpty, setInputEmpty] = useState(false);
+  const [signUpSuccesful, setSignUpSuccesful] = useState(false);
   const [form, setForm] = useState({
     userName: "",
     userEmail: "",
@@ -29,12 +31,11 @@ function Signup(props) {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const [inputEmpty, setInputEmpty] = useState(false);
-
   const postLogin = (event) => {
     event.preventDefault();
     if (!form.userName || !form.userEmail || !form.userPassword) {
       setInputEmpty(true);
+      setSignUpSuccesful(false);
     } else {
       props
         .signup(form)
@@ -49,7 +50,7 @@ function Signup(props) {
 
   return (
     <>
-      <Layout title="Digiwallet | Login">
+      <Layout title="Digiwallet | Signup">
         <Container fluid>
           <Row>
             <div

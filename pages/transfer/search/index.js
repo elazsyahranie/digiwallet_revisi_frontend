@@ -42,18 +42,31 @@ function Transfer(props) {
   const [searchForm, setSearchForm] = useState({ keyword: "" });
   const [searchResult, setSearchResult] = useState([]);
 
+  const [totalPage, setTotalPage] = useState("");
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("user_name ASC");
+  const [searchUsername, setSearchUsername] = useState({ search: "" });
+
   const handleSearchBar = (event) => {
     event.preventDefault();
-    setSearchForm({ ...searchForm, [event.target.name]: event.target.value });
+    setSearchUsername({
+      ...searchUsername,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const sendKeyword = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
+      // console.log(search);
       props
-        .getUserbyKeyword(searchForm.keyword)
+        .getUserbyKeyword(page, sort, searchUsername.search)
         .then((res) => {
           setSearchResult(res.value.data.data);
+          setTotalPage(res.value.data.pagination.totalPage);
+          // console.log(page);
+          console.log("Total Page");
+          console.log(totalPage);
         })
         .catch((err) => {
           console.log(err);
@@ -169,7 +182,7 @@ function Transfer(props) {
                       <Form.Control
                         type="text"
                         placeholder="Enter receiver"
-                        name="keyword"
+                        name="search"
                         onChange={(event) => handleSearchBar(event)}
                         onKeyDown={(event) => sendKeyword(event)}
                         required
@@ -203,21 +216,23 @@ function Transfer(props) {
                           </div>
                         );
                       })}
-                  <div className={styles.myPaginationContainer}>
-                    <ReactPaginate
-                      previousLabel={"<<"}
-                      nextLabel={">>"}
-                      breakLabel={"..."}
-                      breakClassName={"break-me"}
-                      pageCount={1}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={1}
-                      containerClassName={styles.pagination}
-                      subContainerClassName={`${styles.pages} ${styles.pagination}`}
-                      activeClassName={styles.active}
-                    />
-                  </div>
+                  {searchResult.length > 0 ? (
+                    <div className={styles.myPaginationContainer}>
+                      <ReactPaginate
+                        previousLabel={"<<"}
+                        nextLabel={">>"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={totalPage}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={1}
+                        containerClassName={styles.pagination}
+                        subContainerClassName={`${styles.pages} ${styles.pagination}`}
+                        activeClassName={styles.active}
+                      />
+                    </div>
+                  ) : null}
                 </div>
               </Col>
             </Row>
