@@ -42,6 +42,10 @@ module.exports = {
         source: "/change-password",
         destination: "/profile/changePassword",
       },
+      {
+        source: "/change-pin",
+        destination: "/profile/changePin",
+      },
     ];
   },
 };
