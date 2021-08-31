@@ -98,6 +98,9 @@ function Dashboard(props) {
         .then((res) => {
           console.log(res);
           setTopUpSuccess(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         })
         .catch((err) => {
           console.log(err);

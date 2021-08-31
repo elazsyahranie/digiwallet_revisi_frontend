@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import styles from "/styles/personalInfo.module.css";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import styles from "/styles/changePassword.module.css";
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap";
 import Cookies from "js-cookie";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
@@ -10,7 +10,11 @@ import { authPage } from "middleware/authorizationPage";
 import router from "next/router";
 import axiosApiIntances from "/utils/axios";
 import { connect } from "react-redux";
-import { getUserbyId, getUserbyKeyword } from "/redux/actions/user";
+import {
+  getUserbyId,
+  getUserbyKeyword,
+  updateUserPassword,
+} from "/redux/actions/user";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
@@ -37,6 +41,48 @@ export async function getServerSideProps(context) {
 }
 
 function changePassword(props) {
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
+  const [changePasswordSuccess, setPasswordSuccess] = useState(false);
+  const [changePasswordForm, setChangePasswordForm] = useState({
+    password: "",
+    newPassword: "",
+    newPasswordRepeat: "",
+  });
+
+  const handleForm = (event) => {
+    setChangePasswordForm({
+      ...changePasswordForm,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const submitForm = (event) => {
+    event.preventDefault();
+    const userPassword = changePasswordForm.password;
+    const userNewPassword = changePasswordForm.newPassword;
+    if (
+      changePasswordForm.newPassword !== changePasswordForm.newPasswordRepeat
+    ) {
+      setPasswordsDontMatch(true);
+      setPasswordSuccess(false);
+    } else {
+      props
+        .updateUserPassword(props.userData.userResult[0].user_id, {
+          userPassword,
+          userNewPassword,
+        })
+        .then((res) => {
+          console.log(res);
+          setPasswordsDontMatch(false);
+          setPasswordSuccess(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(changePasswordForm);
+    }
+  };
+
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -56,6 +102,8 @@ function changePassword(props) {
     Cookies.remove("token");
     router.push("/login");
   };
+
+  // console.log(props.userData.userResult[0].user_id);
 
   return (
     <>
@@ -142,44 +190,65 @@ function changePassword(props) {
                 className={`p-4 ${styles.whiteBackground}`}
               >
                 <div className="p-2">
-                  <div className="mb-2">
+                  <div className="mb-4">
                     <h6>Change Password</h6>
                     <p className={styles.personalInformationDesc}>
                       You must enter your current password and then type your
                       new password twice.
                     </p>
                   </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
-                      <h6 className="fw-normal">First Name</h6>
-                      <h5>Robert</h5>
-                    </div>
+                  <div className="d-flex justify-content-center pt-5 mb-4">
+                    <Form className={`${styles.newPasswordForm} mt-2`}>
+                      <Form.Group className="mb-4">
+                        <Form.Control
+                          type="password"
+                          name="password"
+                          onChange={(event) => handleForm(event)}
+                          className={styles.newPasswordFormControl}
+                          placeholder="Current password"
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-4">
+                        <Form.Control
+                          type="password"
+                          name="newPassword"
+                          onChange={(event) => handleForm(event)}
+                          className={styles.newPasswordFormControl}
+                          placeholder="New password"
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-4">
+                        <Form.Control
+                          type="password"
+                          name="newPasswordRepeat"
+                          onChange={(event) => handleForm(event)}
+                          className={styles.newPasswordFormControl}
+                          placeholder="Repeat new password"
+                        />
+                      </Form.Group>
+                      <Button
+                        type="submit"
+                        onClick={(change) => submitForm(event)}
+                        className={styles.changePasswordButton}
+                      >
+                        Change Password
+                      </Button>
+                    </Form>
                   </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
-                      <h6 className="fw-normal">Last Name</h6>
-                      <h5>Chandler</h5>
+                  {passwordsDontMatch && (
+                    <div className={styles.alertContainer}>
+                      <Alert variant="danger" className={styles.alert}>
+                        Passwords don't match!
+                      </Alert>
                     </div>
-                  </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
-                      <h6 className="fw-normal">Verified Email</h6>
-                      <h5>pewdiepie1@gmail.com</h5>
+                  )}
+                  {changePasswordSuccess && (
+                    <div className={styles.alertContainer}>
+                      <Alert variant="success" className={styles.alert}>
+                        Change password succesful!
+                      </Alert>
                     </div>
-                  </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div
-                      className={`pt-3 pb-3 ${styles.profileDataContentPhoneNumber}`}
-                    >
-                      <div>
-                        <h6 className="fw-normal">Phone Number</h6>
-                        <h5>+62 187986960689</h5>
-                      </div>
-                      <div>
-                        <span>Manage</span>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -196,6 +265,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchtoProps = { getUserbyId, getUserbyKeyword };
+const mapDispatchtoProps = {
+  getUserbyId,
+  getUserbyKeyword,
+  updateUserPassword,
+};
 
 export default connect(mapStateToProps, mapDispatchtoProps)(changePassword);

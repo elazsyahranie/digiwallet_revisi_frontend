@@ -6,7 +6,6 @@ import BellLogo from "/public/bell_icon.png";
 import style from "/styles/navbar.module.css";
 
 function NavBar(props) {
-  console.log(props.data.userResult[0].user_image);
   return (
     <>
       <Navbar expand="lg" className={style.navbarHeight}>

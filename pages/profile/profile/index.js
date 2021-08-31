@@ -105,7 +105,7 @@ function Profile(props) {
     }
   };
 
-  console.log(props.userData.userResult[0]);
+  // console.log(props.userData.userResult[0]);
   // console.log(userProfileData);
   const goToDashboard = () => {
     router.push("/dashboard");
@@ -131,9 +131,8 @@ function Profile(props) {
     router.push("/personal-info");
   };
 
-  const changePassword = (event) => {
-    event.preventDefault();
-    console.log("Change password!");
+  const changePassword = () => {
+    router.push("/change-password");
   };
 
   const changePIN = (event) => {
@@ -336,7 +335,7 @@ function Profile(props) {
                 </div>
                 <div
                   className={`${styles.profileMenu}`}
-                  onClick={(event) => changePassword(event)}
+                  onClick={() => changePassword()}
                 >
                   <div className={styles.profileMenuContent}>
                     <span className={styles.profileMenuName}>

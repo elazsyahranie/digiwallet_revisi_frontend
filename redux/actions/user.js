@@ -28,6 +28,13 @@ export const updateUserImage = (id, image) => {
   };
 };
 
+export const updateUserPassword = (id, setData) => {
+  return {
+    type: "UDPATE_USER_PASSWORD",
+    payload: axiosApiIntances.patch(`user/update-password/${id}`, setData),
+  };
+};
+
 export const insertPin = (id, userPin) => {
   return {
     type: "INSERT_PIN",
