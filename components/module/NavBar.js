@@ -1,11 +1,12 @@
 import { Navbar, Nav, Container, Button, Row } from "react-bootstrap";
 import Image from "next/image";
 import ZwalletLogo from "/public/ZwalletLogoColor.png";
-import TempImgProfile from "/public/Rectangle 25.png";
+import noProfilePicture from "/public/img-not-found.png";
 import BellLogo from "/public/bell_icon.png";
 import style from "/styles/navbar.module.css";
 
 function NavBar(props) {
+  console.log(props.data.userResult[0].user_image);
   return (
     <>
       <Navbar expand="lg" className={style.navbarHeight}>
@@ -36,13 +37,20 @@ function NavBar(props) {
               style={{ minWidth: "260px" }}
             >
               <Nav.Item>
-                <Image
-                  src={TempImgProfile}
-                  alt=""
-                  height={52}
-                  width={52}
-                  className={`img-fluid my-auto`}
-                />
+                {!props.data.userResult[0].user_image ? (
+                  <Image
+                    src={noProfilePicture}
+                    alt=""
+                    height={52}
+                    width={52}
+                    className={`img-fluid my-auto`}
+                  />
+                ) : (
+                  <img
+                    src={`${process.env.IMAGE_URL}/${props.data.userResult[0].user_image}`}
+                    className={style.profilePicture}
+                  ></img>
+                )}
               </Nav.Item>
               <Nav.Item>
                 <div className={style.namePhoneNumber}>

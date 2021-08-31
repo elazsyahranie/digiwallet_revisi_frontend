@@ -141,6 +141,11 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+.profilePicture {
+  height: 70px;
+  width: auto;
+}
 /* UPLOAD PICTURE FORM */
 
 .rightMenuButtonUp {

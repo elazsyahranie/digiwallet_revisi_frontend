@@ -2,6 +2,10 @@ module.exports = {
   env: {
     APP_NAME: "Digiwallet",
     BASE_URL: "http://localhost:3003/api/v1",
+    IMAGE_URL: "http://localhost:3003/api",
+  },
+  images: {
+    domains: [`localhost`],
   },
   async rewrites() {
     return [

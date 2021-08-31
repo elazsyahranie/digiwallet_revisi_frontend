@@ -49,6 +49,7 @@ function Profile(props) {
     userEmail: props.userData.userResult[0].user_email,
     userPhone: props.userData.userResult[0].user_phone,
     userName: props.userData.userResult[0].user_name,
+    userImage: props.userData.userResult[0].user_image,
   });
   const [userImage, setUserImage] = useState("");
 
@@ -61,13 +62,15 @@ function Profile(props) {
   };
 
   const handleImage = (event) => {
-    setUserImage(URL.createObjectURL(event.target.files[0]));
+    setUserImage(event.target.files[0]);
   };
 
   const updateImage = () => {
     console.log(userImage);
+    const fd = new FormData();
+    fd.append("image", userImage);
     props
-      .updateUserImage(props.userData.userResult[0].user_id, userImage)
+      .updateUserImage(props.userData.userResult[0].user_id, fd)
       .then((res) => {
         console.log(res);
       })
@@ -102,7 +105,7 @@ function Profile(props) {
     }
   };
 
-  // console.log(props.userData.userResult[0]);
+  console.log(props.userData.userResult[0]);
   // console.log(userProfileData);
   const goToDashboard = () => {
     router.push("/dashboard");
@@ -227,12 +230,19 @@ function Profile(props) {
                 <div className="d-flex justify-content-center mt-4 mb-2">
                   <div className="position-relative">
                     <Form.Group className={styles.formGroupUploadImage}>
-                      <Image
-                        src={noProfilePicture}
-                        width="70"
-                        height="70"
-                        className={styles.imgProfile}
-                      />
+                      {!userProfileData.userImage ? (
+                        <Image
+                          src={noProfilePicture}
+                          width="70"
+                          height="70"
+                          className={styles.imgProfile}
+                        />
+                      ) : (
+                        <img
+                          src={`${process.env.IMAGE_URL}/${userProfileData.userImage}`}
+                          className={styles.profilePicture}
+                        ></img>
+                      )}
                       <Form.Label
                         htmlFor="formFile"
                         className={styles.boxUpdateImage}
@@ -248,6 +258,7 @@ function Profile(props) {
                     </Form.Group>
                   </div>
                 </div>
+                <div></div>
                 <div className="d-flex justify-content-center mb-2">
                   <Button
                     variant="outline-dark"

@@ -25,6 +25,11 @@
   margin: auto;
 }
 
+.profilePicture {
+  height: 70px;
+  width: auto;
+}
+
 /* 
 .navBarWidth {
   padding-right: 100px;
