@@ -38,6 +38,10 @@ module.exports = {
         source: "/search", // pengganti path pada react js
         destination: "/transfer/search", // lokasi path
       },
+      {
+        source: "/change-password",
+        destination: "/profile/changePassword",
+      },
     ];
   },
 };
