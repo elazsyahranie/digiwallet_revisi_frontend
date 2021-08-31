@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Layout from "/components/Layout";
 import { useState } from "react";
-import { Container, Row, Form, Button, Alert } from "react-bootstrap";
+import { Container, Row, Button, Alert } from "react-bootstrap";
 import style from "/styles/login.module.css";
 import logo from "/public/login/Zwallet.png";
 import Group57 from "/public/login/Group57.png";
-import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import Cookies from "js-cookie";
 import { insertPin } from "/redux/actions/user";
 import { authPage } from "/middleware/authorizationPage";
 
@@ -19,7 +17,6 @@ export async function getServerSideProps(context) {
 }
 
 function insertpin(props) {
-  const router = useRouter();
   const [form, setForm] = useState("");
   const [pinBlank, setPinBlank] = useState(false);
   const [pinLess, setPinLess] = useState(false);

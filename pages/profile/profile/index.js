@@ -137,7 +137,7 @@ function Profile(props) {
 
   const changePIN = (event) => {
     event.preventDefault();
-    console.log("Change PIN!");
+    router.push("/change-pin");
   };
 
   const { user_name, user_phone } = props.userData.userResult[0];

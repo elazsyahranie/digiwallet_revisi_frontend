@@ -152,8 +152,9 @@ function Input(props) {
     router.push("/search");
   };
 
-  // console.log(props.userReceiver.userResult[0].user_id);
+  const { balance } = props.userData.balanceResult[0];
   const { user_name } = props.userReceiver.userResult[0];
+  // console.log(balance);
   return (
     <>
       <Layout title="Digiwallet | Input">
@@ -322,7 +323,9 @@ function Input(props) {
                     />
                   </Form>
                   <div className={styles.nominalAvailableContainer}>
-                    <h6 className="text-center fw-bold">Rp120.000 available</h6>
+                    <h6 className="text-center fw-bold">
+                      Rp{balance.toLocaleString()} available
+                    </h6>
                   </div>
                   <Form className={`mt-5 ${styles.someNotesForm}`}>
                     <Form.Control
