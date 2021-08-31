@@ -244,7 +244,7 @@ function Dashboard(props) {
                 <Row
                   className={`p-4 mb-3 ${styles.blueBackground} ${styles.whiteText}`}
                 >
-                  <Col lg={9} md={9} sm={9} xs={9}>
+                  <Col lg={9} md={9} sm={7} xs={7}>
                     <span className="d-block">Balance</span>
                     {props.userData.balanceResult[0].balance ? (
                       <h2>
@@ -256,15 +256,21 @@ function Dashboard(props) {
                     )}
                     <span className="d-block">+62 813-9387-7946</span>
                   </Col>
-                  <Col lg={3} md={3} sm={3} xs={3}>
+                  <Col
+                    lg={3}
+                    md={3}
+                    sm={5}
+                    xs={5}
+                    className="position-relative"
+                  >
                     <Button
-                      className={styles.rightMenuButtonUp}
+                      className={`${styles.rightMenuButtonUp} ${styles.rightMenuButtonUpTransfer}`}
                       onClick={() => goToTransfer()}
                     >
                       Transfer
                     </Button>
                     <Button
-                      className={styles.rightMenuButtonUp}
+                      className={`${styles.rightMenuButtonUp} ${styles.rightMenuButtonUpTopUp}`}
                       onClick={() => showTopUpModal()}
                     >
                       Top Up

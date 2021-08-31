@@ -105,45 +105,22 @@
   color: #1ec15f;
 }
 
-/* @media (max-width: 822px) {
-  .menuExplaination {
-    display: none;
-  }
-
-  .leftMenuButton,
-  .leftMenuButton:hover {
-    display: block;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 20px;
-    color: black;
-    background-color: transparent;
-    border: none;
-    border-radius: 0px;
-    display: flex;
-  }
-
-  .leftMenuButtonSelected,
-  .leftMenuButtonSelected:hover {
-    display: block;
-    width: 100%;
-    margin-bottom: 20px;
-    color: black;
-    align-items: center;
-    background-color: transparent;
-    border-left: 5px solid #0070f3;
-    border-top: none;
-    border-bottom: none;
-    border-right: none;
-    border-radius: 0px;
-    display: flex;
-  }
-} */
-
+/* RIGHT MENU BUTTON UP */
 .rightMenuButtonUp {
   display: block;
   width: 100%;
 }
+
+.rightMenuButtonUpTransfer {
+  position: absolute;
+  top: 0;
+}
+
+.rightMenuButtonUpTopUp {
+  position: absolute;
+  bottom: 0;
+}
+/* RIGHT MENU BUTTON UP */
 
 /* 
 .rightMenuButtonUp {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "/styles/personalInfo.module.css";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Cookies from "js-cookie";
 import Layout from "/components/Layout";
 import NavBar from "/components/module/NavBar";
@@ -15,10 +15,7 @@ import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
-import noProfilePicture from "/public/img-not-found.png";
 import logOutIcon from "/public/log-out.png";
-import arrowLeft from "/public/arrow-left.png";
-import pencil from "/public/Vector (2).png";
 
 export async function getServerSideProps(context) {
   const data = await authPage(context);
@@ -58,20 +55,6 @@ function personalInfo(props) {
     Cookies.remove("user_email");
     Cookies.remove("token");
     router.push("/login");
-  };
-
-  const personalInformation = () => {
-    router.push("/personal-info");
-  };
-
-  const changePassword = (event) => {
-    event.preventDefault();
-    console.log("Change password!");
-  };
-
-  const changePIN = (event) => {
-    event.preventDefault();
-    console.log("Change PIN!");
   };
 
   return (

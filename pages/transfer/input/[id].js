@@ -123,12 +123,6 @@ function Input(props) {
       userPin.pin4 +
       userPin.pin5 +
       userPin.pin6;
-    // const [transaction, setTransaction] = useState({
-    //   senderId: props.userData.userResult[0].user_id,
-    //   receiverId: props.userReceiver.userResult[0].user_id,
-    //   transactionValue: "",
-    //   transactionNotes: "",
-    // });
     const { senderId, receiverId, transactionValue, transactionNotes } =
       transaction;
     const transactionData = {

@@ -50,7 +50,7 @@ function Profile(props) {
     userPhone: props.userData.userResult[0].user_phone,
     userName: props.userData.userResult[0].user_name,
   });
-  const [image, setImage] = useState(null);
+  const [userImage, setUserImage] = useState("");
 
   const showUpdateProfile = () => {
     setShowForm(true);
@@ -61,22 +61,19 @@ function Profile(props) {
   };
 
   const handleImage = (event) => {
-    setImage(event.target.files[0]);
-    updateImage();
+    setUserImage(URL.createObjectURL(event.target.files[0]));
   };
 
   const updateImage = () => {
-    console.log(image);
-    // const formData = new FormData();
-    // formData.append("image", image);
-    // props
-    //   .updateUserImage(props.userData.userResult[0].user_id, formData)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    console.log(userImage);
+    props
+      .updateUserImage(props.userData.userResult[0].user_id, userImage)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleUpdateProfile = (event) => {
@@ -105,7 +102,6 @@ function Profile(props) {
     }
   };
 
-  // console.log(image);
   // console.log(props.userData.userResult[0]);
   // console.log(userProfileData);
   const goToDashboard = () => {
@@ -243,14 +239,22 @@ function Profile(props) {
                       >
                         Jangan di hapus !
                       </Form.Label>
-                      <Form.Control
+                      <input
                         type="file"
                         id="formFile"
                         onChange={(event) => handleImage(event)}
                         className={styles.updateImage}
-                      />
+                      ></input>
                     </Form.Group>
                   </div>
+                </div>
+                <div className="d-flex justify-content-center mb-2">
+                  <Button
+                    variant="outline-dark"
+                    onClick={(event) => updateImage(event)}
+                  >
+                    Upload image
+                  </Button>
                 </div>
                 <div className="d-flex justify-content-center mb-3">
                   <div
