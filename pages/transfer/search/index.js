@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "/styles/search.module.css";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Cookies from "js-cookie";
@@ -53,6 +53,7 @@ function Transfer(props) {
       ...searchUsername,
       [event.target.name]: event.target.value,
     });
+    setPage(1);
   };
 
   const sendKeyword = (event) => {
@@ -72,6 +73,28 @@ function Transfer(props) {
           console.log(err);
         });
     }
+  };
+
+  const pageId = (event) => {
+    const selectedPage = event.selected + 1;
+    console.log(selectedPage);
+    setPage(selectedPage);
+    props
+      .getUserbyKeyword(selectedPage, sort, searchUsername.search)
+      .then((res) => {
+        setSearchResult(res.value.data.data);
+        setTotalPage(res.value.data.pagination.totalPage);
+        // console.log(page);
+        console.log("Total Page");
+        console.log(totalPage);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const resendKeyword = () => {
+    console.log(page);
   };
 
   const goToInputPage = (user_id) => {
@@ -226,7 +249,7 @@ function Transfer(props) {
                         pageCount={totalPage}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
-                        onPageChange={1}
+                        onPageChange={pageId}
                         containerClassName={styles.pagination}
                         subContainerClassName={`${styles.pages} ${styles.pagination}`}
                         activeClassName={styles.active}

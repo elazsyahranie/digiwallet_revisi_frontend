@@ -11,7 +11,7 @@ export const getUserbyKeyword = (page, sort, search) => {
   return {
     type: "GET_USER_BY_KEYWORD",
     payload: axiosApiIntances.get(
-      `/user/?page=${page}&limit=4&sort=${sort}&search=${search}`
+      `/user/?page=${page}&limit=7&sort=${sort}&search=${search}`
     ),
   };
 };
