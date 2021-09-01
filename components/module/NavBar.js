@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container, Button, Row } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import Image from "next/image";
 import ZwalletLogo from "/public/ZwalletLogoColor.png";
 import noProfilePicture from "/public/img-not-found.png";
@@ -37,16 +37,18 @@ function NavBar(props) {
             >
               <Nav.Item>
                 {!props.data.userResult[0].user_image ? (
-                  <Image
-                    src={noProfilePicture}
-                    alt=""
-                    height={52}
-                    width={52}
-                    className={`img-fluid my-auto`}
-                  />
+                  <div style={{ borderRadius: "5px", overflow: "hidden" }}>
+                    <Image
+                      src={noProfilePicture}
+                      alt=""
+                      height={52}
+                      width={52}
+                    />
+                  </div>
                 ) : (
                   <img
                     src={`${process.env.IMAGE_URL}/${props.data.userResult[0].user_image}`}
+                    alt=""
                     className={style.profilePicture}
                   ></img>
                 )}

@@ -25,8 +25,6 @@ export async function getServerSideProps(context) {
     .then((res) => {
       const allResult = {
         userResult: res.data.data.result,
-        balanceResult: res.data.data.resultBalance,
-        transactionResult: res.data.data.resultTransactionHistory,
       };
       return allResult;
     })
@@ -56,6 +54,14 @@ function personalInfo(props) {
     Cookies.remove("token");
     router.push("/login");
   };
+
+  console.log(props.userData.userResult[0]);
+
+  const { user_name, user_email, user_phone } = props.userData.userResult[0];
+  const userNameSplit = user_name.split(" ");
+  console.log(userNameSplit[0]);
+  console.log(userNameSplit[1]);
+  console.log(userNameSplit.length);
 
   return (
     <>
@@ -150,22 +156,30 @@ function personalInfo(props) {
                       contact our support.
                     </p>
                   </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
-                      <h6 className="fw-normal">First Name</h6>
-                      <h5>Robert</h5>
-                    </div>
-                  </div>
-                  <div className={`${styles.profileData} mb-2`}>
-                    <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
-                      <h6 className="fw-normal">Last Name</h6>
-                      <h5>Chandler</h5>
-                    </div>
-                  </div>
+                  {userNameSplit.length > 1 && (
+                    <>
+                      <div className={`${styles.profileData} mb-2`}>
+                        <div
+                          className={`pt-3 pb-3 ${styles.profileDataContent}`}
+                        >
+                          <h6 className="fw-normal">First Name</h6>
+                          <h5>{userNameSplit[0]}</h5>
+                        </div>
+                      </div>
+                      <div className={`${styles.profileData} mb-2`}>
+                        <div
+                          className={`pt-3 pb-3 ${styles.profileDataContent}`}
+                        >
+                          <h6 className="fw-normal">Last Name</h6>
+                          <h5>{userNameSplit[1]}</h5>
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <div className={`${styles.profileData} mb-2`}>
                     <div className={`pt-3 pb-3 ${styles.profileDataContent}`}>
                       <h6 className="fw-normal">Verified Email</h6>
-                      <h5>pewdiepie1@gmail.com</h5>
+                      <h5>{user_email}</h5>
                     </div>
                   </div>
                   <div className={`${styles.profileData} mb-2`}>
@@ -174,7 +188,7 @@ function personalInfo(props) {
                     >
                       <div>
                         <h6 className="fw-normal">Phone Number</h6>
-                        <h5>+62 187986960689</h5>
+                        <h5>{user_phone}</h5>
                       </div>
                       <div>
                         <span>Manage</span>

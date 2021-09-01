@@ -19,6 +19,7 @@ export async function getServerSideProps(context) {
 function Login(props) {
   const router = useRouter();
   const [form, setForm] = useState({ userEmail: "", userPassword: "" });
+  const [loginFailed, setLoginFailed] = useState("");
 
   const changeText = (event) => {
     event.preventDefault();
@@ -48,13 +49,20 @@ function Login(props) {
             expires: 7,
             secure: true,
           });
-          router.push("/dashboard");
+          setLoginFailed("");
+          setInputEmpty("");
+          // router.push("/dashboard");
         })
         .catch((err) => {
-          console.log(err);
+          setLoginFailed(err.response.data.msg);
+          setInputEmpty("");
         });
     }
   };
+
+  if (loginFailed) {
+    console.log(loginFailed);
+  }
 
   return (
     <>
@@ -133,6 +141,11 @@ function Login(props) {
                       <Alert variant="danger">
                         You need to input both fields!
                       </Alert>
+                    </div>
+                  )}
+                  {loginFailed && (
+                    <div className="mt-3">
+                      <Alert variant="danger">{loginFailed}</Alert>
                     </div>
                   )}
                 </div>

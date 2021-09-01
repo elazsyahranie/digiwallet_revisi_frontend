@@ -3,6 +3,7 @@ module.exports = {
     APP_NAME: "Digiwallet",
     BASE_URL: "http://localhost:3003/api/v1",
     IMAGE_URL: "http://localhost:3003/api",
+    FRONTEND_IMAGE: "http://localhost:3000",
   },
   images: {
     domains: [`localhost`],

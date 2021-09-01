@@ -5,7 +5,6 @@
 
 .navbarHeight {
   height: 90px;
-  /* border: 1px solid #000; */
 }
 
 .navLinkWidth {
@@ -26,25 +25,25 @@
 }
 
 .profilePicture {
-  height: 70px;
-  width: auto;
+  height: 52px;
+  width: 52px;
+  object-fit: cover;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px;
 }
 
-/* 
-.navBarWidth {
-  padding-right: 100px;
-} */
+.noProfilePicture {
+  border-radius: 10px;
+  height: 52px;
+  width: 52px;
+}
 
 .leftNav {
   margin-left: 3rem;
   visibility: hidden;
 }
-
-/* .navWidth {
-  position: relative;
-  left: 6%;
-  display: flex;
-} */
 
 .navWidthRight {
   position: relative;

@@ -20,6 +20,7 @@ function Signup(props) {
   const router = useRouter();
   const [inputEmpty, setInputEmpty] = useState(false);
   const [signUpSuccesful, setSignUpSuccesful] = useState(false);
+  const [signUpFailed, setSignUpFailed] = useState("");
   const [form, setForm] = useState({
     userName: "",
     userEmail: "",
@@ -31,19 +32,24 @@ function Signup(props) {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const postLogin = (event) => {
+  const postSignIn = (event) => {
     event.preventDefault();
     if (!form.userName || !form.userEmail || !form.userPassword) {
       setInputEmpty(true);
       setSignUpSuccesful(false);
+      setSignUpFailed(false);
     } else {
       props
         .signup(form)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          setSignUpSuccesful(true);
+          setSignUpFailed(false);
+          setInputEmpty(false);
         })
         .catch((err) => {
-          console.log(err);
+          setSignUpSuccesful(false);
+          setSignUpFailed(err.response.data.msg);
+          setInputEmpty(false);
         });
     }
   };
@@ -125,15 +131,25 @@ function Signup(props) {
                     <Button
                       variant="primary"
                       type="submit"
-                      onClick={(event) => postLogin(event)}
+                      onClick={(event) => postSignIn(event)}
                     >
                       Signup
                     </Button>
                   </Form>
+                  {signUpSuccesful && (
+                    <div className="mt-3">
+                      <Alert variant="success">Sign up succesful!</Alert>
+                    </div>
+                  )}
+                  {signUpFailed && (
+                    <div className="mt-3">
+                      <Alert variant="danger">{signUpFailed}</Alert>
+                    </div>
+                  )}
                   {inputEmpty && (
                     <div className="mt-3">
                       <Alert variant="danger">
-                        You need to input both fields!
+                        One of the fields is empty!
                       </Alert>
                     </div>
                   )}
