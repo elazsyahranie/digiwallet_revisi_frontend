@@ -32,11 +32,11 @@ function Login(props) {
     event.preventDefault();
     if (!form.userEmail || !form.userPassword) {
       setInputEmpty(true);
+      setLoginFailed(false);
     } else {
       props
         .login(form)
         .then((res) => {
-          console.log(res);
           Cookies.set("user_email", res.value.data.data.user_email, {
             expires: 7,
             secure: true,
@@ -51,7 +51,7 @@ function Login(props) {
           });
           setLoginFailed("");
           setInputEmpty("");
-          // router.push("/dashboard");
+          router.push("/dashboard");
         })
         .catch((err) => {
           setLoginFailed(err.response.data.msg);

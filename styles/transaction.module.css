@@ -1,0 +1,149 @@
+.greyBackground {
+  background-color: #e5e5e5;
+}
+
+.mainRowMargin {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.entireRow {
+  min-height: 600px;
+}
+
+.whiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+  min-height: 600px;
+}
+
+.leftColwhiteBackground {
+  background-color: #fff;
+  border-radius: 25px;
+  min-height: 100%;
+}
+
+.blueBackground {
+  background-color: #6379f4;
+  border-radius: 20px;
+}
+
+.whiteText {
+  color: white;
+}
+
+.leftMenuIcon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.leftMenuButton,
+.leftMenuButton:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuButtonSelected,
+.leftMenuButtonSelected:hover {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border-left: 5px solid #0070f3;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0px;
+  display: flex;
+}
+
+.leftMenuExplaination {
+  margin-left: 30px;
+}
+
+@media (max-width: 991.98px) {
+  .leftMenuExplaination {
+    margin-left: 15px;
+  }
+}
+
+.personalInformationDesc {
+  max-width: 340px;
+}
+
+.noProfilePictureAvailable {
+  border-radius: 10px;
+}
+
+.userSearchResultBox {
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px 0px #0000000d;
+  cursor: pointer;
+}
+
+/* LOG OUT BUTTON */
+.logOutButton,
+.logOutButton:hover {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+}
+/* LOG OUT BUTTON */
+
+.rightMenuButtonUp {
+  display: block;
+  width: 100%;
+}
+
+.profileData {
+  box-shadow: 0px 4px 20px 0px #0000000d;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.profileDataContent {
+  width: inherit;
+  margin-left: 38px;
+  margin-right: 38px;
+}
+
+.profileDataContentPhoneNumber {
+  width: inherit;
+  margin-left: 38px;
+  margin-right: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* TRANSACTION HISTORY USER CONTAINER */
+.transactionHistoryUserContainer {
+  display: flex;
+  align-items: center;
+}
+
+.transactionHistoryUserContainerSub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 92%;
+  padding-left: 15px;
+}
+/* TRANSACTION HISTORY USER CONTAINER */

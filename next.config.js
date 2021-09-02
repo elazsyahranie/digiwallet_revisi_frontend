@@ -24,6 +24,10 @@ module.exports = {
         destination: "/auth/insertpin", // lokasi path
       },
       {
+        source: "/transaction-history", // pengganti path pada react js
+        destination: "/transaction", // lokasi path
+      },
+      {
         source: "/dashboard", // pengganti path pada react js
         destination: "/dashboard", // lokasi path
       },
