@@ -38,7 +38,6 @@ export async function getServerSideProps(context) {
       const allResult = {
         userResult: res.data.data.result,
         balanceResult: res.data.data.resultBalance,
-        // transactionResult: res.data.data.resultTransactionHistory,
       };
       return allResult;
     })
@@ -54,14 +53,17 @@ export async function getServerSideProps(context) {
     .catch((err) => {
       console.log(err);
     });
+
   return {
-    props: { userData: userData, transactionHistory: userTransactionHistory },
+    props: {
+      userData: userData,
+      transactionHistory: userTransactionHistory,
+    },
   };
 }
 
 function Dashboard(props) {
   const userId = props.userData.userResult[0].user_id;
-  // console.log(userId);
   // TOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
 
