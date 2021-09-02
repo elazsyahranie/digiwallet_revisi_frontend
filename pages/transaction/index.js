@@ -47,6 +47,8 @@ export async function getServerSideProps(context) {
 }
 
 function transactionHistory(props) {
+  const userId = props.userData.userResult[0].user_id;
+
   const goToDashboard = () => {
     router.push("/dashboard");
   };
@@ -156,32 +158,71 @@ function transactionHistory(props) {
                 className={`p-4 ${styles.whiteBackground}`}
               >
                 <div className="p-2">
-                  <div className="mb-2">
+                  <div className="mb-4">
                     <h6>Transaction History</h6>
                   </div>
-                </div>
-                <div
-                  className={`mb-4 ${styles.transactionHistoryUserContainer}`}
-                >
-                  <div>
-                    <Image
-                      src={samuelSuhi}
-                      alt=""
-                      className="img-fluid my-auto"
-                    ></Image>
-                  </div>
-                  <div className={styles.transactionHistoryUserContainerSub}>
-                    <div>
-                      <span className="d-block fw-bold">Samuel Suhi</span>
-                      <span className="d-block">Receipent</span>
-                    </div>
-                    <div>
-                      <span className={`d-block ${styles.receivedTransfer}`}>
-                        +20,000
-                      </span>
-                    </div>
+                  <div className="mb-4">
+                    <span>This Week</span>
                   </div>
                 </div>
+                {props.transactionHistory.map((element, index) => {
+                  return (
+                    <Row className={`mb-4`} key={index}>
+                      <Col
+                        lg={2}
+                        md={2}
+                        sm={2}
+                        xs={2}
+                        className="d-flex align-items-center justify-content-center"
+                      >
+                        <div>
+                          <Image
+                            src={samuelSuhi}
+                            alt=""
+                            className="img-fluid my-auto"
+                          ></Image>
+                        </div>
+                      </Col>
+                      <Col
+                        lg={8}
+                        md={8}
+                        sm={8}
+                        xs={8}
+                        className="d-flex align-items-center"
+                      >
+                        <Row>
+                          <span className="d-block fw-bold">
+                            {element.user_name}
+                          </span>
+                          {element.transaction_sender_id === userId ? (
+                            <span className="d-block">Transfer</span>
+                          ) : (
+                            <span className="d-block">Receipent</span>
+                          )}
+                        </Row>
+                      </Col>
+                      <Col
+                        lg={2}
+                        md={2}
+                        sm={2}
+                        xs={2}
+                        className="d-flex align-items-center justify-content-center"
+                      >
+                        {element.transaction_sender_id === userId ? (
+                          <span className={`d-block ${styles.sentTransfer}`}>
+                            -{element.transaction_amount.toLocaleString()}
+                          </span>
+                        ) : (
+                          <span
+                            className={`d-block ${styles.receivedTransfer}`}
+                          >
+                            +{element.transaction_amount.toLocaleString()}
+                          </span>
+                        )}
+                      </Col>
+                    </Row>
+                  );
+                })}
               </Col>
             </Row>
           </Container>

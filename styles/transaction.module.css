@@ -133,6 +133,18 @@
   align-items: center;
 }
 
+/* TRANSFER OR RECEIPENT */
+.sentTransfer {
+  font-weight: bold;
+  color: #ff5b37;
+}
+
+.receivedTransfer {
+  font-weight: bold;
+  color: #1ec15f;
+}
+/* TRANSFER OR RECEIPENT */
+
 /* TRANSACTION HISTORY USER CONTAINER */
 .transactionHistoryUserContainer {
   display: flex;

@@ -129,6 +129,11 @@ function Dashboard(props) {
     router.push("/login");
   };
 
+  // TO TRANSACTION HISTORY
+  const goToTransactionHistory = () => {
+    router.push("/transaction-history");
+  };
+
   return (
     <>
       <Modal show={topUpModal} onHide={closeTopUpModal}>
@@ -335,7 +340,12 @@ function Dashboard(props) {
                         <span className="fw-bold">Transaction History</span>
                       </Col>
                       <Col lg={4} md={4} sm={4} xs={4}>
-                        <span>See all</span>
+                        <span
+                          onClick={() => goToTransactionHistory()}
+                          style={{ cursor: "pointer" }}
+                        >
+                          See all
+                        </span>
                       </Col>
                     </Row>
                     {props.transactionHistory.map((element, index) => {
