@@ -164,65 +164,134 @@ function transactionHistory(props) {
                   <div className="mb-4">
                     <span>This Week</span>
                   </div>
-                </div>
-                {props.transactionHistory.map((element, index) => {
-                  return (
-                    <Row className={`mb-4`} key={index}>
-                      <Col
-                        lg={2}
-                        md={2}
-                        sm={2}
-                        xs={2}
-                        className="d-flex align-items-center justify-content-center"
-                      >
-                        <div>
-                          <Image
-                            src={samuelSuhi}
-                            alt=""
-                            className="img-fluid my-auto"
-                          ></Image>
-                        </div>
-                      </Col>
-                      <Col
-                        lg={8}
-                        md={8}
-                        sm={8}
-                        xs={8}
-                        className="d-flex align-items-center"
-                      >
-                        <Row>
-                          <span className="d-block fw-bold">
-                            {element.user_name}
-                          </span>
-                          {element.transaction_sender_id === userId ? (
-                            <span className="d-block">Transfer</span>
-                          ) : (
-                            <span className="d-block">Receipent</span>
-                          )}
-                        </Row>
-                      </Col>
-                      <Col
-                        lg={2}
-                        md={2}
-                        sm={2}
-                        xs={2}
-                        className="d-flex align-items-center justify-content-center"
-                      >
-                        {element.transaction_sender_id === userId ? (
-                          <span className={`d-block ${styles.sentTransfer}`}>
-                            -{element.transaction_amount.toLocaleString()}
-                          </span>
-                        ) : (
-                          <span
-                            className={`d-block ${styles.receivedTransfer}`}
+                  {props.transactionHistory
+                    .slice(0, 2)
+                    .map((element, index) => {
+                      return (
+                        <Row className={`mb-4`} key={index}>
+                          <Col
+                            lg={2}
+                            md={2}
+                            sm={2}
+                            xs={2}
+                            className="d-flex align-items-center justify-content-center"
                           >
-                            +{element.transaction_amount.toLocaleString()}
-                          </span>
-                        )}
-                      </Col>
-                    </Row>
-                  );
-                })}
+                            <div>
+                              <Image
+                                src={samuelSuhi}
+                                alt=""
+                                className="img-fluid my-auto"
+                              ></Image>
+                            </div>
+                          </Col>
+                          <Col
+                            lg={8}
+                            md={8}
+                            sm={8}
+                            xs={8}
+                            className="d-flex align-items-center"
+                          >
+                            <Row>
+                              <span className="d-block fw-bold">
+                                {element.user_name}
+                              </span>
+                              {element.transaction_sender_id === userId ? (
+                                <span className="d-block">Transfer</span>
+                              ) : (
+                                <span className="d-block">Receipent</span>
+                              )}
+                            </Row>
+                          </Col>
+                          <Col
+                            lg={2}
+                            md={2}
+                            sm={2}
+                            xs={2}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            {element.transaction_sender_id === userId ? (
+                              <span
+                                className={`d-block ${styles.sentTransfer}`}
+                              >
+                                -{element.transaction_amount.toLocaleString()}
+                              </span>
+                            ) : (
+                              <span
+                                className={`d-block ${styles.receivedTransfer}`}
+                              >
+                                +{element.transaction_amount.toLocaleString()}
+                              </span>
+                            )}
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                  <div className="mb-4">
+                    <span>This Month</span>
+                  </div>
+                  {props.transactionHistory
+                    .slice(2, 4)
+                    .map((element, index) => {
+                      return (
+                        <Row className={`mb-4`} key={index}>
+                          <Col
+                            lg={2}
+                            md={2}
+                            sm={2}
+                            xs={2}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            <div>
+                              <Image
+                                src={samuelSuhi}
+                                alt=""
+                                className="img-fluid my-auto"
+                              ></Image>
+                            </div>
+                          </Col>
+                          <Col
+                            lg={8}
+                            md={8}
+                            sm={8}
+                            xs={8}
+                            className="d-flex align-items-center"
+                          >
+                            <Row>
+                              <span className="d-block fw-bold">
+                                {element.user_name}
+                              </span>
+                              {element.transaction_sender_id === userId ? (
+                                <span className="d-block">Transfer</span>
+                              ) : (
+                                <span className="d-block">Receipent</span>
+                              )}
+                            </Row>
+                          </Col>
+                          <Col
+                            lg={2}
+                            md={2}
+                            sm={2}
+                            xs={2}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            {element.transaction_sender_id === userId ? (
+                              <span
+                                className={`d-block ${styles.sentTransfer}`}
+                              >
+                                -{element.transaction_amount.toLocaleString()}
+                              </span>
+                            ) : (
+                              <span
+                                className={`d-block ${styles.receivedTransfer}`}
+                              >
+                                +{element.transaction_amount.toLocaleString()}
+                              </span>
+                            )}
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                </div>
               </Col>
             </Row>
           </Container>
