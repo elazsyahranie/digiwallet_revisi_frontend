@@ -54,16 +54,38 @@ export async function getServerSideProps(context) {
       console.log(err);
     });
 
+  const userExpense = await axiosApiIntances
+    .get(`user/user-expense/${data.userId}`)
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const userIncome = await axiosApiIntances
+    .get(`user/user-income/${data.userId}`)
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return {
     props: {
       userData: userData,
       transactionHistory: userTransactionHistory,
+      expenseData: userExpense,
+      incomeData: userIncome,
     },
   };
 }
 
 function Dashboard(props) {
   const userId = props.userData.userResult[0].user_id;
+  console.log(props);
+  const { expenseData, incomeData } = props;
   // TOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
 
@@ -308,7 +330,11 @@ function Dashboard(props) {
                             ></Image>
                           </div>
                           <span className="d-block">Income</span>
-                          <h5>Rp2.120.000</h5>
+                          {incomeData ? (
+                            <h5>Rp{incomeData.toLocaleString()}</h5>
+                          ) : (
+                            <h5>Rp0</h5>
+                          )}
                         </Row>
                       </Col>
                       <Col lg={4} md={4} sm={6} xs={6}>
@@ -321,7 +347,11 @@ function Dashboard(props) {
                             ></Image>
                           </div>
                           <span className="d-block">Expense</span>
-                          <h5>Rp1.560.000</h5>
+                          {expenseData ? (
+                            <h5>Rp{expenseData.toLocaleString()}</h5>
+                          ) : (
+                            <h5>Rp0</h5>
+                          )}
                         </Row>
                       </Col>
                     </Row>
