@@ -20,6 +20,15 @@ import router from "next/router";
 import { connect } from "react-redux";
 import { getUserbyId } from "/redux/actions/user";
 import { topUpBalance } from "/redux/actions/balance";
+import {
+  BarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import samuelSuhi from "/public/samuelSuhi.png";
 import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
