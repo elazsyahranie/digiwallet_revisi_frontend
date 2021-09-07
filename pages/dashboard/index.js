@@ -84,19 +84,39 @@ export async function getServerSideProps(context) {
       console.log(err);
     });
 
+  const forChartData = await axiosApiIntances
+    .get(`user/for-chart/${data.userId}`)
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const forChartDataMapped = forChartData.map((item) => {
+    const splitDate = item.DATE.split("T");
+    const data = {
+      date: splitDate[0],
+      totalAmount: parseInt(item.totalAmount),
+    };
+    return data;
+  });
+
   return {
     props: {
       userData: userData,
       transactionHistory: userTransactionHistory,
       expenseData: userExpense,
       incomeData: userIncome,
+      forChart: forChartDataMapped,
     },
   };
 }
 
 function Dashboard(props) {
   const userId = props.userData.userResult[0].user_id;
-  console.log(props);
+  console.log(props.forChart);
+  console.log(typeof props.forChart[0].date);
   const { expenseData, incomeData } = props;
   // TOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
@@ -124,6 +144,12 @@ function Dashboard(props) {
 
   const { balanceTopUp } = topUpAmount;
 
+  const forChartMap = props.forChart.map((item) => {
+    const date = new Date(item.date);
+    console.log(date);
+    console.log(item.date);
+  });
+
   const submitTopUp = (event) => {
     event.preventDefault();
     if (!topUpAmount.balanceTopUp) {
@@ -146,43 +172,43 @@ function Dashboard(props) {
 
   const chartData = [
     {
-      name: "Page A",
+      name: "Sat",
       uv: 4000,
       pv: 2400,
       amt: 2400,
     },
     {
-      name: "Page B",
+      name: "Sun",
       uv: 3000,
       pv: 1398,
       amt: 2210,
     },
     {
-      name: "Page C",
+      name: "Mon",
       uv: 2000,
       pv: 9800,
       amt: 2290,
     },
     {
-      name: "Page D",
+      name: "Tue",
       uv: 2780,
       pv: 3908,
       amt: 2000,
     },
     {
-      name: "Page E",
+      name: "Wed",
       uv: 1890,
       pv: 4800,
       amt: 2181,
     },
     {
-      name: "Page F",
+      name: "Thu",
       uv: 2390,
       pv: 3800,
       amt: 2500,
     },
     {
-      name: "Page G",
+      name: "Fri",
       uv: 3490,
       pv: 4300,
       amt: 2100,
@@ -413,26 +439,25 @@ function Dashboard(props) {
                       </Col>
                     </Row>
                     <Row style={{ minHeight: "120px" }}>
-                      <ResponsiveContainer width="100%" height={300}>
+                      <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                          width={80}
+                          width={"100%"}
                           height={60}
                           data={chartData}
                           margin={{
                             top: 20,
                             right: 30,
                             left: 20,
-                            bottom: 5,
+                            bottom: 10,
                           }}
                         >
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="XAxis" />
-                          <YAxis />
+                          <XAxis dataKey="name" />
                           <Tooltip />
                           <Legend />
                           <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-                          <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-                          <Bar dataKey="uv" fill="#ffc658" />
+                          {/* <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
+                          <Bar dataKey="uv" fill="#ffc658" /> */}
                         </BarChart>
                       </ResponsiveContainer>
                       {/* <h6 className="text-center my-auto">Unavailable</h6> */}
