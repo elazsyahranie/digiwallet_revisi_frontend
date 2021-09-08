@@ -73,6 +73,9 @@ function Profile(props) {
       .updateUserImage(props.userData.userResult[0].user_id, fd)
       .then((res) => {
         console.log(res);
+        window.setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
