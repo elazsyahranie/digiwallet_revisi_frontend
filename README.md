@@ -1,31 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## About the App
+
+Make money transfer easier by Digiwwallet! It's fast, effictient, and easy!
+
+## Built With
+
+[![Next](https://img.shields.io/badge/next-v11.0.0-green)](https://github.com/vercel/next.js/)
+[![React Bootstrap](https://img.shields.io/badge/React%20Bootstrap-v1.6.1-blue)](https://github.com/react-bootstrap/react-bootstrap)
+[![Redux](https://img.shields.io/badge/Redux-v4.1.0-yellowgreen)](https://redux.js.org/)
+[![Axios](https://img.shields.io/badge/Axios-v0.21.1-orange)](https://axios-http.com/docs/intro)
+[![Rechart](https://img.shields.io/badge/Rechart-v2.0.9-lightgrey)](https://recharts.org/en-US/guide/getting-started)
+
+## Requirements
+
+1. <a href="https://nodejs.org/en/download/">Node Js</a>
+2. Node_modules `npm install` or `yarn install`
+3. Backend API Digiwallet [`here`](https://github.com/elazsyahranie/digiwallet_revisi_backend)
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Download this Project or you can type `git clone https://github.com/elazsyahranie/digiwallet-revisi-frontend.git`
+2. Open app's directory in CMD or Terminal
+3. Type `npm install` or `yarn install`
+4. Add .env file at next.config.js
 
 ## Deploy on Vercel
 
