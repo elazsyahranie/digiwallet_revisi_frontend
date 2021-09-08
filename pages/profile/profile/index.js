@@ -108,8 +108,6 @@ function Profile(props) {
     }
   };
 
-  // console.log(props.userData.userResult[0]);
-  // console.log(userProfileData);
   const goToDashboard = () => {
     router.push("/dashboard");
   };
