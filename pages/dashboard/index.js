@@ -115,8 +115,6 @@ export async function getServerSideProps(context) {
 
 function Dashboard(props) {
   const userId = props.userData.userResult[0].user_id;
-  console.log(props.forChart);
-  console.log(typeof props.forChart[0].date);
   const { expenseData, incomeData } = props;
   // TOP UP MODAL HANDLING
   const [topUpModal, setTopUpModal] = useState(false);
@@ -146,9 +144,16 @@ function Dashboard(props) {
 
   const forChartMap = props.forChart.map((item) => {
     const date = new Date(item.date);
-    console.log(date);
-    console.log(item.date);
+    const dateString = String(date);
+    const dateStringSplit = dateString.split(" ");
+    const forChartObject = {
+      name: dateStringSplit[0],
+      pv: item.totalAmount,
+    };
+    return forChartObject;
   });
+
+  // console.log(forChartMap);
 
   const submitTopUp = (event) => {
     event.preventDefault();
@@ -443,7 +448,7 @@ function Dashboard(props) {
                         <BarChart
                           width={"100%"}
                           height={60}
-                          data={chartData}
+                          data={forChartMap}
                           margin={{
                             top: 20,
                             right: 30,
