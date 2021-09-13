@@ -69,10 +69,6 @@ function transactionHistory(props) {
     router.push("/login");
   };
 
-  console.log(props);
-  // const { user_name, user_email, user_phone } = props.userData.userResult[0];
-  // const userNameSplit = user_name.split(" ");
-
   return (
     <>
       <Layout title="Digiwallet | Transaction History">

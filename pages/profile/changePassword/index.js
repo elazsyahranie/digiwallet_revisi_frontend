@@ -83,6 +83,7 @@ function changePassword(props) {
     }
   };
 
+  // NAVIGATION HANDLING
   const goToDashboard = () => {
     router.push("/dashboard");
   };

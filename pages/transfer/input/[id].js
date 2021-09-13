@@ -138,6 +138,9 @@ function Input(props) {
         console.log(res);
         setTransactionSuccess(true);
         closeTransactionModal(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .then((err) => {
         console.log(err);
@@ -152,9 +155,21 @@ function Input(props) {
     router.push("/search");
   };
 
+  const goToProfile = () => {
+    router.push("/profile");
+  };
+
+  const logOut = (event) => {
+    event.preventDefault();
+    Cookies.remove("user_id");
+    Cookies.remove("user_email");
+    Cookies.remove("token");
+    router.push("/login");
+  };
+
   const { balance } = props.userData.balanceResult[0];
   const { user_name } = props.userReceiver.userResult[0];
-  // console.log(balance);
+
   return (
     <>
       <Layout title="Digiwallet | Input">
@@ -278,7 +293,10 @@ function Input(props) {
                         Top Up
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToProfile()}
+                    >
                       <Image
                         src={profileIcon}
                         alt=""

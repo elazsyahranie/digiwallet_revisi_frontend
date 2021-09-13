@@ -52,6 +52,8 @@ function Profile(props) {
     userImage: props.userData.userResult[0].user_image,
   });
   const [userImage, setUserImage] = useState("");
+  const [readyUploadImage, setReadyUploadImage] = useState(false);
+  const [uploadImageSuccesful, setUploadImageSuccesful] = useState(false);
 
   const showUpdateProfile = () => {
     setShowForm(true);
@@ -63,6 +65,8 @@ function Profile(props) {
 
   const handleImage = (event) => {
     setUserImage(event.target.files[0]);
+    setReadyUploadImage(true);
+    setUploadImageSuccesful(false);
   };
 
   const updateImage = () => {
@@ -73,6 +77,8 @@ function Profile(props) {
       .updateUserImage(props.userData.userResult[0].user_id, fd)
       .then((res) => {
         console.log(res);
+        setReadyUploadImage(false);
+        setUploadImageSuccesful(true);
         window.setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -258,7 +264,6 @@ function Profile(props) {
                     </Form.Group>
                   </div>
                 </div>
-                <div></div>
                 <div className="d-flex justify-content-center mb-2">
                   <Button
                     variant="outline-dark"
@@ -267,6 +272,24 @@ function Profile(props) {
                     Upload image
                   </Button>
                 </div>
+                {readyUploadImage && (
+                  <div className="d-flex justify-content-center">
+                    <Alert variant="secondary">
+                      <span className="d-block text-center">
+                        Ready to upload. Click <i>upload</i> to continue
+                      </span>
+                    </Alert>
+                  </div>
+                )}
+                {uploadImageSuccesful && (
+                  <div className="d-flex justify-content-center">
+                    <Alert variant="success">
+                      <span className="d-block text-center">
+                        Profile picture succesfully updated
+                      </span>
+                    </Alert>
+                  </div>
+                )}
                 <div className="d-flex justify-content-center mb-3">
                   <div
                     className={styles.editMenuContainer}
