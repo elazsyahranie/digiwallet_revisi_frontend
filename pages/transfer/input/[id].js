@@ -24,6 +24,7 @@ import dashboardIcon from "/public/grid_grey.png";
 import transferIcon from "/public/arrow-up.png";
 import topUpIcon from "/public/plus.png";
 import profileIcon from "/public/group40.png";
+import logOutIcon from "/public/log-out.png";
 import samuelSuhi from "/public/samuelSuhi.png";
 
 export async function getServerSideProps(context) {
@@ -81,7 +82,11 @@ function Input(props) {
 
   // MODAL
   const [transactionModal, setTransactionModal] = useState(false);
-  const closeTransactionModal = () => setTransactionModal(false);
+  const [wrongPin, setWrongPin] = useState(false);
+  const closeTransactionModal = () => {
+    setTransactionModal(false);
+    setWrongPin(false);
+  };
   const showTransactionModal = () => {
     if (!transaction.transactionValue) {
       setNoTransactionValue(true);
@@ -112,6 +117,7 @@ function Input(props) {
       ...userPin,
       [`pin${event.target.name}`]: event.target.value,
     });
+    setWrongPin(false);
   };
 
   const submitTransfer = (event) => {
@@ -138,12 +144,13 @@ function Input(props) {
         console.log(res);
         setTransactionSuccess(true);
         closeTransactionModal(true);
+        setWrongPin(false);
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       })
-      .then((err) => {
-        console.log(err);
+      .catch(() => {
+        setWrongPin(true);
       });
   };
 
@@ -239,6 +246,11 @@ function Input(props) {
                 style={{ width: "10%" }}
               />
             </div>
+            {wrongPin && (
+              <div>
+                <Alert variant="danger">Wrong PIN!</Alert>
+              </div>
+            )}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeTransactionModal}>
@@ -252,11 +264,11 @@ function Input(props) {
         <NavBar data={props.userData} />
         <div className={styles.greyBackground}>
           <Container fluid="sm" className="py-4">
-            <Row>
+            <Row className={styles.entireRow}>
               {/* LEFT MENU */}
               <Col lg={3} md={4} className="d-none d-md-block">
                 <div className={`${styles.whiteBackground} h-100`}>
-                  <div className={`py-5`}>
+                  <div className={`py-5 position-relative h-100`}>
                     <Button
                       className={styles.leftMenuButton}
                       onClick={() => goToDashboard()}
@@ -283,7 +295,10 @@ function Input(props) {
                         Transfer
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToDashboard()}
+                    >
                       <Image
                         src={topUpIcon}
                         alt=""
@@ -304,6 +319,19 @@ function Input(props) {
                       ></Image>
                       <span className={`${styles.leftMenuExplaination}`}>
                         Profile
+                      </span>
+                    </Button>
+                    <Button
+                      className={styles.logOutButton}
+                      onClick={(event) => logOut(event)}
+                    >
+                      <Image
+                        src={logOutIcon}
+                        alt=""
+                        className={`img-fluid ${styles.leftMenuButtonIcon}`}
+                      ></Image>
+                      <span className={`${styles.leftMenuExplaination}`}>
+                        Log Out
                       </span>
                     </Button>
                   </div>

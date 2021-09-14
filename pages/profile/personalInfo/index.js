@@ -95,7 +95,10 @@ function personalInfo(props) {
                         Transfer
                       </span>
                     </Button>
-                    <Button className={styles.leftMenuButton}>
+                    <Button
+                      className={styles.leftMenuButton}
+                      onClick={() => goToDashboard()}
+                    >
                       <Image
                         src={topUpIcon}
                         alt=""
