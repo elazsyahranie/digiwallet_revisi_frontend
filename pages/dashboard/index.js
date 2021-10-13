@@ -87,7 +87,12 @@ export async function getServerSideProps(context) {
   const forChartData = await axiosApiIntances
     .get(`user/for-chart/${data.userId}`)
     .then((res) => {
-      return res.data.data;
+      if (res.data.data) {
+        return res.data.data;
+      } else {
+        return [];
+      }
+      // console.log(res);
     })
     .catch((err) => {
       console.log(err);
